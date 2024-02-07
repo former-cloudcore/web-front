@@ -1,6 +1,7 @@
+import apiClient from './api-client';
 import { PostProps } from '../components/Post/Post';
-import data from './MOCK_DATA.json';
 
 export const getPosts = async (): Promise<PostProps[]> => {
-    return data.posts;
+    const response = await apiClient.get('/post');
+    return response.data;
 };

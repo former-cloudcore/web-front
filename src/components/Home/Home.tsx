@@ -2,19 +2,20 @@ import styles from './Home.module.css';
 import { PostProps } from '../Post/Post';
 import { useEffect, useState } from 'react';
 import Post from '../Post/Post';
-import * as Api from '../../utils/api';
+import * as Api from '../../utils/api-client';
 
 const Home = () => {
     const [posts, setPosts] = useState<PostProps[]>([]);
     useEffect(() => {
-        getPosts();
+        (async () => {
+            const posts = await Api.getPosts();
+            setPosts(posts);
+        })();
     }, []);
-    const getPosts = async () => {
-        const data = await Api.getPosts();
-        setPosts(data);
-    };
 
     const renderPosts = posts.map((post) => {
+        console.log(post.commentsAmount);
+        
         return (
             <Post
                 {...post}
@@ -35,9 +36,14 @@ const Home = () => {
             return post;
         });
         setPosts(newPosts);
-    }
+    };
 
-    return <div className={styles.home}><div className={styles.postsWrapper}>{renderPosts}</div></div>;
+    return (
+        <div className={styles.home}>
+            should show the posts here but it doesn't
+            <div className={styles.postsWrapper}>{renderPosts}</div>
+        </div>
+    );
 };
 
 export default Home;

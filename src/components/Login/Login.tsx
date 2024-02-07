@@ -3,23 +3,34 @@ import styles from './Login.module.css'
 import classNames from 'classnames'
 import { Link } from 'react-router-dom'
 import { FcGoogle } from 'react-icons/fc'
+import Alert from '@mui/material/Alert';
+import { loginUser } from '../../utils/user-service'
 
 const Login = () => {
     const [emailState, setEmailState] = React.useState('')
     const [passwordState, setPasswordState] = React.useState('')
-    const handleSubmit = () => {
-        // const data = new FormData(event.currentTarget)
-        // console.log({
-        //     email: data.get('email'),
-        //     password: data.get('password'),
-        // })
+    const [errorState, setErrorState] = React.useState('')
+    const handleSubmit = async () => {
+        try {
+            await loginUser(emailState, passwordState)
+            window.location.href = '/'
+        }
+        catch (e) {
+            if (e?.response?.status === 401) {
+                setErrorState('Invalid credentials')
+            }
+            else
+                setErrorState('An error occurred while logging in. Please try again later.')
+        }
     }
 
     return (
         <div className={styles.login}>
             <div className={styles.wrapper}>
-                <form onSubmit={handleSubmit} className={styles.form}>
+                <div className={styles.form}>
+                    
                     <div className={styles.headerText}>Sign in</div>
+                    {errorState && <Alert className={styles.alert} severity="error">{errorState}</Alert>}
                     <input
                         name="email"
                         placeholder="Email"
@@ -36,12 +47,13 @@ const Login = () => {
                         className={classNames(styles.input, styles.password)}
                         onChange={(e) => setPasswordState(e.target.value)}
                     />
-                    <input
+                    <button
                         type="submit"
                         value="Sign in"
                         className={styles.generalButton}
-                    />
-                </form>
+                        onClick={handleSubmit}
+                    >Sign in</button>
+                </div>
                 <div className={styles.otherButtons}>
                     <Link to={'/signup'}>
                         <button className={styles.generalButton}>
