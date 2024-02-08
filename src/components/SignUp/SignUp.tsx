@@ -48,7 +48,7 @@ const SignUp = () => {
     return (
         <div className={styles.signUp}>
             <div className={styles.wrapper}>
-                <form onSubmit={handleSubmit} className={styles.form}>
+                <div className={styles.form}>
                     <div className={styles.headerText}>Sign up</div>
                     <div className={styles.bigInput}>
                         <input
@@ -125,12 +125,12 @@ const SignUp = () => {
                         />
                     )}
 
-                    <input
-                        type="submit"
+                    <button
+                        onClick={handleSubmit}
                         value="Sign up"
                         className={styles.generalButton}
-                    />
-                </form>
+                    >Sign up</button>
+                </div>
                 <div className={styles.otherButtons}>
                     <Link to={'/login'}>
                         <button className={styles.generalButton}>

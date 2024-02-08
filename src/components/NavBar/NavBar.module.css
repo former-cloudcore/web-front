@@ -18,7 +18,14 @@
     text-decoration: none;
     font-size: 1.5rem;
     margin-right: 1rem;
+
+    &:hover {
+        cursor: pointer;
+        scale: 1.1;
+    }
 }
+
+
 
 .toggleImg {
     width: 4rem;

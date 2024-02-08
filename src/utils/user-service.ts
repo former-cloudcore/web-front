@@ -23,4 +23,24 @@ export const loginUser = async (
     }
     localStorage.setItem('accessToken', data.accessToken);
     localStorage.setItem('refreshToken', data.refreshToken);
+    localStorage.setItem('userId', (await getUser())._id);
+};
+
+interface userResponse {
+    _id: string;
+    email: string;
+    name: string;
+    image: string;
+    __v: number;
+}
+export const getUser = async (): Promise<userResponse> => {
+    const { data, status } = await apiClient.get('/user/profile', {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+    });
+    if (status !== 200) {
+        throw new Error('Error getting user');
+    }
+    return data;
 };
