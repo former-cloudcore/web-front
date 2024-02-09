@@ -10,22 +10,28 @@ export interface NavBarProps {
 const NavBar = (props: NavBarProps) => {
     return (
         <div className={styles.navBar}>
-            <Link className={styles.home} to="/">
-                <img
-                    className={styles.homeImg}
-                    src="../../../assets/homeButton.png"
-                />
-            </Link>
-            {localStorage.getItem('userId') ? (
-                <ProfileDropDown />
-            ) : (
-                <Link className={styles.login} to="/login">
-                    Login
+            <div className={styles.wrapper}>
+                <Link className={styles.home} to="/">
+                    <img
+                        className={styles.homeImg}
+                        src="../../../assets/homeButton.png"
+                    />
                 </Link>
-            )}
+            </div>
+            <div className={styles.wrapper}>
+                {localStorage.getItem('userId') ? (
+                    <ProfileDropDown />
+                ) : (
+                    <Link className={styles.login} to="/login">
+                        Login
+                    </Link>
+                )}
+            </div>
 
-            <div className={styles.toggle} onClick={props.toggleBackground}>
-                <img className={styles.toggleImg} src={props.toggleImg} />
+            <div className={styles.wrapper}>
+                <div className={styles.toggle} onClick={props.toggleBackground}>
+                    <img className={styles.toggleImg} src={props.toggleImg} />
+                </div>
             </div>
         </div>
     );

@@ -6,6 +6,7 @@ import Login from './components/Login/Login';
 import NavBar from './components/NavBar/NavBar';
 import SignUp from './components/SignUp/SignUp';
 import classNames from 'classnames';
+import CreatePost from './components/CreatePost/CreatePost';
 const App = () => {
     const [backgroungState, setBackgroundState] = React.useState(false);
     return (
@@ -29,6 +30,7 @@ const App = () => {
                     <Route path="/" element={<Home />} />
                     <Route path="login" element={<Login />} />
                     <Route path="signup" element={<SignUp />} />
+                    <Route path="createPost" element={<CreatePost />} />
                 </Routes>
             </BrowserRouter>
         </div>

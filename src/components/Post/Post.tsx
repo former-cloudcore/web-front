@@ -13,7 +13,12 @@ export interface PostProps {
     text: string;
     imagePath: string;
     usersWhoLiked: string[];
-    createdBy: string;
+    createdBy: {
+        _id: string;
+        name: string;
+        image: string;
+    
+    };
     date: Date;
     commentsAmount: number;
 }
@@ -73,7 +78,13 @@ const Post = (props: PostProps) => {
                 />
             </div>
             <div className={styles.usernameWrapper}>
-                <div className={styles.username}>{props.createdBy}</div>
+                <img
+                    src={props.createdBy.image}
+                    className={styles.profileImg}
+                    onError={(event) => {
+                        event.currentTarget.src = DEFAULT_IMAGE;
+                    }}/>
+                <div className={styles.username}>{props.createdBy.name}</div>
             </div>
             <div className={styles.postTextWrapper}>
                 <div className={styles.postText}>{props.text}</div>

@@ -21,14 +21,14 @@ export const loginUser = async (
     localStorage.setItem('userId', (await getUser())._id);
 };
 
-interface userResponse {
+interface myUserResponse {
     _id: string;
     email: string;
     name: string;
     image: string;
     __v: number;
 }
-export const getUser = async (): Promise<userResponse> => {
+export const getUser = async (): Promise<myUserResponse> => {
     const { data, status } = await apiClient.get('/user/profile', {
         headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

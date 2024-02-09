@@ -6,6 +6,7 @@ import { getPosts } from '../../utils/posts-service';
 
 const Home = () => {
     const [posts, setPosts] = useState<PostProps[]>([]);
+    const [users, setUsers] = useState<any[]>([]);
     useEffect(() => {
         (async () => {
             const posts = await getPosts();
