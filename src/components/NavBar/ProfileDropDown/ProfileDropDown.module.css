@@ -8,4 +8,20 @@
     width: 3rem;
     height: 3rem;
     color: white;
+    &:hover{
+        cursor: pointer;
+    }
+    display: flex;
+    align-items: center;
+}
+
+.imgWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    
+    width: 7rem;
+
+    
 }

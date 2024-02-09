@@ -25,12 +25,15 @@ const ProfileDropDown = () => {
     };
     return (
         <div className={styles.profileDropDown}>
-            <img
-                className={styles.profileImg}
-                src={image}
-                alt="Profile"
-                onClick={(e) => setEnchorEl(e.currentTarget)}
-            />
+            <div className={styles.imgWrapper} onClick={(e) => setEnchorEl(e.currentTarget)}>
+                
+                <img
+                    className={styles.profileImg}
+                    src={image}
+                    alt="Profile"
+                    
+                />
+            </div>
             <Menu
                 id="basic-menu"
                 anchorEl={enchorEl}
@@ -39,6 +42,7 @@ const ProfileDropDown = () => {
                 MenuListProps={{
                     'aria-labelledby': 'basic-button',
                 }}
+                className={styles.menu}
             >
                 <MenuItem onClick={() => setEnchorEl(null)}>Profile</MenuItem>
                 <MenuItem onClick={() => setEnchorEl(null)}>
