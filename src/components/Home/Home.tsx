@@ -14,16 +14,8 @@ const Home = () => {
     }, []);
 
     const renderPosts = posts.map((post) => {
-        console.log(post.commentsAmount);
-
-        return (
-            <Post
-                {...post}
-                key={post.id}
-            />
-        );
+        return <Post {...post} key={post.id} />;
     });
-
 
     return (
         <div className={styles.home}>

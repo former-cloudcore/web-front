@@ -1,9 +1,8 @@
 import apiClient from './api-client';
 import { PostProps } from '../components/Post/Post';
-import { SERVER_URL } from './consts';
 
 export const getPosts = async (): Promise<PostProps[]> => {
-    const { status, data } = await apiClient.get('/post');
+    const data = (await apiClient.get('/post')).data;
 
     return data.map((post) => ({
         ...post,
@@ -15,7 +14,7 @@ export const getPosts = async (): Promise<PostProps[]> => {
 };
 
 export const likePost = async (postId: string): Promise<void> => {
-    const { status } = await apiClient.post(
+    await apiClient.post(
         `/post/like/${postId}`,
         {},
         {
@@ -27,7 +26,7 @@ export const likePost = async (postId: string): Promise<void> => {
 };
 
 export const unlikePost = async (postId: string): Promise<void> => {
-    const { status } = await apiClient.post(
+    await apiClient.post(
         `/post/unlike/${postId}`,
         {},
         {

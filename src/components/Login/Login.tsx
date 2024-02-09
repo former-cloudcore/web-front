@@ -48,7 +48,6 @@ const Login = () => {
                         onChange={(e) => setPasswordState(e.target.value)}
                     />
                     <button
-                        type="submit"
                         value="Sign in"
                         className={styles.generalButton}
                         onClick={handleSubmit}

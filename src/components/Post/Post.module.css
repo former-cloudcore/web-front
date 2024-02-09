@@ -82,8 +82,11 @@
     height: 4rem;
 }
 
+
 .like {
     font-size: 2rem;
+    display: flex;
+    align-items: center;
     img {
         width: 4rem;
         height: 4rem;

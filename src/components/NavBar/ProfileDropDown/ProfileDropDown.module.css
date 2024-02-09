@@ -1,0 +1,11 @@
+.profileDropDown{
+    display: flex;
+    
+    align-items: center;
+    justify-content: center;
+}
+.profileImg{
+    width: 3rem;
+    height: 3rem;
+    color: white;
+}

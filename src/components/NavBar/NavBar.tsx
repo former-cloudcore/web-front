@@ -1,19 +1,13 @@
 import { Link } from 'react-router-dom';
 import styles from './NavBar.module.css';
 import classNames from 'classnames';
+import ProfileDropDown from './ProfileDropDown/ProfileDropDown';
 
 export interface NavBarProps {
     toggleBackground: () => void;
     toggleImg: string;
 }
 const NavBar = (props: NavBarProps) => {
-    const logout = () => {
-        localStorage.removeItem('userId');
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        window.location.reload();
-    };
-
     return (
         <div className={styles.navBar}>
             <Link className={styles.home} to="/">
@@ -23,9 +17,7 @@ const NavBar = (props: NavBarProps) => {
                 />
             </Link>
             {localStorage.getItem('userId') ? (
-                <div className={classNames(styles.login, styles.logout)} onClick={logout}>
-                    Logout
-                </div>
+                <ProfileDropDown />
             ) : (
                 <Link className={styles.login} to="/login">
                     Login

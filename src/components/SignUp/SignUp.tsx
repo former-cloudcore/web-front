@@ -3,20 +3,39 @@ import styles from './SignUp.module.css';
 import classNames from 'classnames';
 import { FcGoogle } from 'react-icons/fc';
 import { Link } from 'react-router-dom';
+import Alert from '@mui/material/Alert';
+import { signUpUser } from '../../utils/user-service';
 
 const SignUp = () => {
     const [emailState, setEmailState] = React.useState('');
     const [passwordState, setPasswordState] = React.useState('');
     const [confirmPasswordState, setConfirmPasswordState] = React.useState('');
     const [usernameState, setUsernameState] = React.useState('');
-    const [imageState, setImageState] = React.useState('');
+    const [imageState, setImageState] = React.useState<File>();
     const [isPasswordValid, setIsPasswordValid] = React.useState(true);
+    const [errorState, setErrorState] = React.useState('');
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleSubmit = async () => {
+        if (!emailState || !passwordState || !usernameState) {
+            setErrorState('All fields are required');
+            return;
+        }
         if (passwordState !== confirmPasswordState) {
             setIsPasswordValid(false);
             return;
+        }
+
+        try {
+            await signUpUser(emailState, passwordState, usernameState, imageState);
+
+            window.location.href = '/';
+        } catch (e) {
+            setErrorState(e.response.data);
+            
+            
+            
+            
+            
         }
 
         // Rest of the form submission logic
@@ -33,15 +52,11 @@ const SignUp = () => {
         }
     };
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                if (e.target) {
-                    setImageState(e.target.result as string);
-                }
-            };
-            reader.readAsDataURL(e.target.files[0]);
+    const handleImageChange = async (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        if (e.target.files && e.target.files.length > 0) {
+            setImageState(e.target.files[0]);
         }
     };
 
@@ -49,6 +64,11 @@ const SignUp = () => {
         <div className={styles.signUp}>
             <div className={styles.wrapper}>
                 <div className={styles.form}>
+                    {errorState && (
+                        <Alert className={styles.alert} severity="error">
+                            {errorState}
+                        </Alert>
+                    )}
                     <div className={styles.headerText}>Sign up</div>
                     <div className={styles.bigInput}>
                         <input
@@ -119,7 +139,7 @@ const SignUp = () => {
                     </div>
                     {imageState && (
                         <img
-                            src={imageState}
+                            src={URL.createObjectURL(imageState)}
                             alt="Preview"
                             className={styles.previewImage}
                         />
@@ -129,7 +149,9 @@ const SignUp = () => {
                         onClick={handleSubmit}
                         value="Sign up"
                         className={styles.generalButton}
-                    >Sign up</button>
+                    >
+                        Sign up
+                    </button>
                 </div>
                 <div className={styles.otherButtons}>
                     <Link to={'/login'}>
