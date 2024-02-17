@@ -8,7 +8,15 @@ import SignUp from './components/SignUp/SignUp';
 import classNames from 'classnames';
 import CreatePost from './components/CreatePost/CreatePost';
 const App = () => {
-    const [backgroungState, setBackgroundState] = React.useState(false);
+    const [backgroungState, setBackgroundState] = React.useState(
+        localStorage.getItem('background') === 'true' ? true : false
+    );
+    const handleBackgroundToggle = () => {
+        setBackgroundState((prev) => {
+            localStorage.setItem('background', (!prev).toString());
+            return !prev;
+        });
+    };
     return (
         <div
             className={classNames(styles.app, {
@@ -17,9 +25,7 @@ const App = () => {
         >
             <BrowserRouter>
                 <NavBar
-                    toggleBackground={() => {
-                        setBackgroundState((prev) => !prev);
-                    }}
+                    toggleBackground={handleBackgroundToggle}
                     toggleImg={
                         backgroungState
                             ? '../assets/happyCricket.png'
