@@ -7,6 +7,7 @@ import { likePost, unlikePost } from '../../utils/posts-service';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { isAxiosError } from 'axios';
 
 export interface PostProps {
     id: string;
@@ -17,7 +18,6 @@ export interface PostProps {
         _id: string;
         name: string;
         image: string;
-    
     };
     date: Date;
     commentsAmount: number;
@@ -25,7 +25,9 @@ export interface PostProps {
 
 const Post = (props: PostProps) => {
     const [liked, setLiked] = useState(
-        props.usersWhoLiked.includes(localStorage.getItem('userId'))
+        localStorage.getItem('userId')
+            ? props.usersWhoLiked.includes(localStorage.getItem('userId')!)
+            : false
     );
     const [open, setOpen] = useState(false);
 
@@ -35,16 +37,18 @@ const Post = (props: PostProps) => {
                 await unlikePost(props.id);
                 setLiked(false);
                 props.usersWhoLiked.splice(
-                    props.usersWhoLiked.indexOf(localStorage.getItem('userId')),
+                    props.usersWhoLiked.indexOf(
+                        localStorage.getItem('userId')!
+                    ),
                     1
                 );
             } else {
                 await likePost(props.id);
                 setLiked(true);
-                props.usersWhoLiked.push(localStorage.getItem('userId'));
+                props.usersWhoLiked.push(localStorage.getItem('userId')!);
             }
         } catch (error) {
-            if (error.response.status === 401) {
+            if (isAxiosError(error) && error.response?.status === 401) {
                 setOpen(true);
             }
             console.log(error);
@@ -83,7 +87,8 @@ const Post = (props: PostProps) => {
                     className={styles.profileImg}
                     onError={(event) => {
                         event.currentTarget.src = DEFAULT_IMAGE;
-                    }}/>
+                    }}
+                />
                 <div className={styles.username}>{props.createdBy.name}</div>
             </div>
             <div className={styles.postTextWrapper}>

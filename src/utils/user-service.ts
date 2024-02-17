@@ -37,7 +37,6 @@ export const getUser = async (): Promise<myUserResponse> => {
     if (status !== 200) {
         throw new Error('Error getting user');
     }
-    console.log(data);
 
     return data;
 };

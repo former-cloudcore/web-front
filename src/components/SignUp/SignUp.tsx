@@ -5,6 +5,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { Link } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import { signUpUser } from '../../utils/user-service';
+import { isAxiosError } from 'axios';
 
 const SignUp = () => {
     const [emailState, setEmailState] = React.useState('');
@@ -26,16 +27,22 @@ const SignUp = () => {
         }
 
         try {
-            await signUpUser(emailState, passwordState, usernameState, imageState);
+            await signUpUser(
+                emailState,
+                passwordState,
+                usernameState,
+                imageState
+            );
 
             window.location.href = '/';
         } catch (e) {
-            setErrorState(e.response.data);
-            
-            
-            
-            
-            
+            if (isAxiosError(e)) {
+                setErrorState(e.response?.data);
+            } else {
+                setErrorState(
+                    'An error occurred while signing up. Please try again later.'
+                );
+            }
         }
 
         // Rest of the form submission logic

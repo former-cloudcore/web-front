@@ -1,36 +1,40 @@
-import * as React from 'react'
-import styles from './Login.module.css'
-import classNames from 'classnames'
-import { Link } from 'react-router-dom'
-import { FcGoogle } from 'react-icons/fc'
+import * as React from 'react';
+import styles from './Login.module.css';
+import classNames from 'classnames';
+import { Link } from 'react-router-dom';
+import { FcGoogle } from 'react-icons/fc';
 import Alert from '@mui/material/Alert';
-import { loginUser } from '../../utils/user-service'
+import { loginUser } from '../../utils/user-service';
+import { isAxiosError, AxiosError } from 'axios';
 
 const Login = () => {
-    const [emailState, setEmailState] = React.useState('')
-    const [passwordState, setPasswordState] = React.useState('')
-    const [errorState, setErrorState] = React.useState('')
+    const [emailState, setEmailState] = React.useState('');
+    const [passwordState, setPasswordState] = React.useState('');
+    const [errorState, setErrorState] = React.useState('');
     const handleSubmit = async () => {
         try {
-            await loginUser(emailState, passwordState)
-            window.location.href = '/'
+            await loginUser(emailState, passwordState);
+            window.location.href = '/';
+        } catch (e) {
+            if (isAxiosError(e) && (e as AxiosError).response?.status === 401) {
+                setErrorState('Invalid credentials');
+            } else
+                setErrorState(
+                    'An error occurred while logging in. Please try again later.'
+                );
         }
-        catch (e) {
-            if (e?.response?.status === 401) {
-                setErrorState('Invalid credentials')
-            }
-            else
-                setErrorState('An error occurred while logging in. Please try again later.')
-        }
-    }
+    };
 
     return (
         <div className={styles.login}>
             <div className={styles.wrapper}>
                 <div className={styles.form}>
-                    
                     <div className={styles.headerText}>Sign in</div>
-                    {errorState && <Alert className={styles.alert} severity="error">{errorState}</Alert>}
+                    {errorState && (
+                        <Alert className={styles.alert} severity="error">
+                            {errorState}
+                        </Alert>
+                    )}
                     <input
                         name="email"
                         placeholder="Email"
@@ -51,7 +55,9 @@ const Login = () => {
                         value="Sign in"
                         className={styles.generalButton}
                         onClick={handleSubmit}
-                    >Sign in</button>
+                    >
+                        Sign in
+                    </button>
                 </div>
                 <div className={styles.otherButtons}>
                     <Link to={'/signup'}>
@@ -67,7 +73,7 @@ const Login = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;
