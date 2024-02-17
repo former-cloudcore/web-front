@@ -1,6 +1,7 @@
 import styles from './CreatePostButton.module.css';
 import { FaPlus } from 'react-icons/fa';
 import Tooltip from '@mui/material/Tooltip';
+import { Link } from 'react-router-dom';
 
 const CreatePostButton = () => {
     return (
@@ -11,9 +12,11 @@ const CreatePostButton = () => {
                 }
                 placement="top"
             >
-                <div className={styles.createPostButton}>
-                    <FaPlus className={styles.button} />
-                </div>
+                <Link to="/createPost">
+                    <div className={styles.createPostButton}>
+                        <FaPlus className={styles.button} />
+                    </div>
+                </Link>
             </Tooltip>
         </div>
     );
