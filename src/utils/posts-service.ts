@@ -1,9 +1,6 @@
 import apiClient from './api-client';
 import { PostProps } from '../components/Post/Post';
 
-
-
-
   interface PostsResponse {
     _id: string;
     text: string;

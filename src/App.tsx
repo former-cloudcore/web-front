@@ -5,14 +5,16 @@ import Home from './components/Home/Home';
 import Login from './components/Login/Login';
 import NavBar from './components/NavBar/NavBar';
 import SignUp from './components/SignUp/SignUp';
-import classNames from 'classnames';
 import CreatePost from './components/CreatePost/CreatePost';
+import Chat from './components/Chat/Chat'; // Import Chat component
+import classNames from 'classnames';
+
 const App = () => {
-    const [backgroungState, setBackgroundState] = React.useState(false);
+    const [backgroundState, setBackgroundState] = React.useState(false);
     return (
         <div
             className={classNames(styles.app, {
-                [styles.background]: backgroungState,
+                [styles.background]: backgroundState,
             })}
         >
             <BrowserRouter>
@@ -21,7 +23,7 @@ const App = () => {
                         setBackgroundState((prev) => !prev);
                     }}
                     toggleImg={
-                        backgroungState
+                        backgroundState
                             ? '../assets/happyCricket.png'
                             : '../assets/sadCricket.png'
                     }
@@ -31,6 +33,7 @@ const App = () => {
                     <Route path="login" element={<Login />} />
                     <Route path="signup" element={<SignUp />} />
                     <Route path="createPost" element={<CreatePost />} />
+                    <Route path="chat" element={<Chat />} />
                 </Routes>
             </BrowserRouter>
         </div>
