@@ -20,6 +20,13 @@
             "imagePath": "../assets/homeButton.png",
             "isLiked": false,
             "id": 3
+        },
+        {
+            "text": "mymock",
+            "userName": "weee",
+            "imagePath": "../assets/homeButton.png",
+            "isLiked": false,
+            "id": 3
         }
     ]
 }
