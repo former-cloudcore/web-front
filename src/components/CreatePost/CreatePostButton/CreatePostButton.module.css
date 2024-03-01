@@ -1,0 +1,23 @@
+.createPostButton{
+    width: 4rem;
+    height: 4rem;
+    font-size: 2rem;
+    border: 2px solid #61b41e;
+    background-color: #61b41e;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+        background-color: #428110;
+        border-color: #428110;
+    }
+
+}
+
+.toolTipText{
+    font-size: 1.5rem;
+}

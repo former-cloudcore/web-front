@@ -1,15 +1,33 @@
 import { Link } from 'react-router-dom';
 import styles from './NavBar.module.css';
-import classNames from 'classnames';
 import ProfileDropDown from './ProfileDropDown/ProfileDropDown';
+import { useEffect, useState } from 'react';
+import { getUser } from '../../utils/user-service';
 
 export interface NavBarProps {
     toggleBackground: () => void;
     toggleImg: string;
 }
 const NavBar = (props: NavBarProps) => {
+    const [reload, setReload] = useState(0);
+    useEffect(() => {
+        (async () => {
+            const userId = localStorage.getItem('userId');
+            if (userId) {
+                try {
+                    await getUser();
+                } catch (error) {
+                    // If the user is not authenticated, remove the user data from local storage
+                    localStorage.removeItem('userId');
+                    localStorage.removeItem('accessToken');
+                    localStorage.removeItem('refreshToken');
+                    setReload((prev) => prev + 1);
+                }
+            }
+        })();
+    }, []);
     return (
-        <div className={styles.navBar}>
+        <div className={styles.navBar} key={reload}>
             <div className={styles.wrapper}>
                 <Link className={styles.home} to="/">
                     <img

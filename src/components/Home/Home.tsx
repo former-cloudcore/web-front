@@ -1,12 +1,12 @@
 import styles from './Home.module.css';
-import { PostProps } from '../Post/Post';
+import { PostProps } from './Post/Post';
 import { useEffect, useState } from 'react';
-import Post from '../Post/Post';
+import Post from './Post/Post';
 import { getPosts } from '../../utils/posts-service';
+import CreatePostButton from '../CreatePost/CreatePostButton/CreatePostButton';
 
 const Home = () => {
     const [posts, setPosts] = useState<PostProps[]>([]);
-    const [users, setUsers] = useState<any[]>([]);
     useEffect(() => {
         (async () => {
             const posts = await getPosts();
@@ -21,6 +21,9 @@ const Home = () => {
     return (
         <div className={styles.home}>
             <div className={styles.postsWrapper}>{renderPosts}</div>
+            <div className={styles.createPostWrapper}>
+                <CreatePostButton />
+            </div>
         </div>
     );
 };

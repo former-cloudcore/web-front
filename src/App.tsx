@@ -2,15 +2,23 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import React from 'react';
 import styles from './App.module.css';
 import Home from './components/Home/Home';
-import Login from './components/Login/Login';
+import Login from './components/LoginPage/Login/Login';
 import NavBar from './components/NavBar/NavBar';
-import SignUp from './components/SignUp/SignUp';
+import SignUp from './components/LoginPage/SignUp/SignUp';
 import CreatePost from './components/CreatePost/CreatePost';
 import Chat from './components/Chat/Chat'; // Import Chat component
 import classNames from 'classnames';
 
 const App = () => {
-    const [backgroundState, setBackgroundState] = React.useState(false);
+    const [backgroundState, setBackgroundState] = React.useState(
+        localStorage.getItem('background') === 'true' ? true : false
+    );
+    const handleBackgroundToggle = () => {
+        setBackgroundState((prev) => {
+            localStorage.setItem('background', (!prev).toString());
+            return !prev;
+        });
+    };
     return (
         <div
             className={classNames(styles.app, {
@@ -19,9 +27,7 @@ const App = () => {
         >
             <BrowserRouter>
                 <NavBar
-                    toggleBackground={() => {
-                        setBackgroundState((prev) => !prev);
-                    }}
+                    toggleBackground={handleBackgroundToggle}
                     toggleImg={
                         backgroundState
                             ? '../assets/happyCricket.png'
