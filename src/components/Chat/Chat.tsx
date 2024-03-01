@@ -30,7 +30,7 @@ const Chat = () => {
     useEffect(() => {
         const newSocket = socketIOClient(SERVER_URL);
         setSocket(newSocket);
-        newSocket.on('message', (convo) => setMessagesState((messages) => JSON.parse(convo)));
+        newSocket.on('message', (convo) => setMessagesState(() => JSON.parse(convo)));
         return () => newSocket.disconnect();
     }, []);
 
@@ -44,18 +44,12 @@ const Chat = () => {
 
     const handleSendMessage = async () => {
         try {
-            if (socket) {
-                const userId: string = localStorage.getItem('userId');
-                socket.emit('sendMessage', {
-                    chatId: chatIdState,
-                    message: messageState,
-                    token: localStorage.getItem('accessToken')
-                });
-
-                // Update the messagesState immediately after sending a new message
-                setMessagesState((messages) => [...messages, { user: userId, text: messageState }]);
-                setMessageState(''); // Clear the message input after sending
-            }
+            socket?.emit('sendMessage', {
+                chatId: chatIdState,
+                message: messageState,
+                token: localStorage.getItem('accessToken')
+            });
+            setMessageState('');
         } catch (error) {
             setErrorState('An error occurred while sending the message. Please try again later.');
         }
@@ -83,6 +77,10 @@ const Chat = () => {
             setErrorState('An error occurred while creating chat. Please try again later.');
         }
     };
+
+    const selectedChat = chatsState.find(chat => chat._id === chatIdState);
+    const otherUserId = selectedChat && selectedChat.users.find(userId => userId !== localStorage.getItem('userId'));
+    const selectedUser = usersState.find(user => user._id === otherUserId);
 
     return (
         <div className={styles.chatContainer}>
@@ -121,6 +119,10 @@ const Chat = () => {
                 </button>
             </div>
             {chatIdState && <div className={styles.chatContent}>
+                {selectedUser && <div className={styles.chatHeader}>
+                    <img src={selectedUser.image} alt={selectedUser.name} />
+                    <div className={styles.username}>{selectedUser.name}</div>
+                </div>}
                 <div className={styles.chat}>
                     {messagesState.map((message, index) => (
                         <div>
