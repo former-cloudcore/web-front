@@ -39,7 +39,7 @@ const Post = (props: PostProps) => {
                 props.usersWhoLiked.splice(
                     props.usersWhoLiked.indexOf(
                         localStorage.getItem('userId')!
-                    ),
+                    ), 
                     1
                 );
             } else {
