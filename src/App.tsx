@@ -2,9 +2,9 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import React from 'react';
 import styles from './App.module.css';
 import Home from './components/Home/Home';
-import Login from './components/Login/Login';
+import Login from './components/LoginPage/Login/Login';
 import NavBar from './components/NavBar/NavBar';
-import SignUp from './components/SignUp/SignUp';
+import SignUp from './components/LoginPage/SignUp/SignUp';
 import classNames from 'classnames';
 import CreatePost from './components/CreatePost/CreatePost';
 const App = () => {

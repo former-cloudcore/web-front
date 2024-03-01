@@ -1,9 +1,9 @@
 import styles from './Post.module.css';
 import { CiHeart } from 'react-icons/ci';
 import { TfiComment } from 'react-icons/tfi';
-import { DEFAULT_IMAGE } from '../../utils/consts';
+import { DEFAULT_IMAGE } from '../../../utils/consts';
 import { useState } from 'react';
-import { likePost, unlikePost } from '../../utils/posts-service';
+import { likePost, unlikePost } from '../../../utils/posts-service';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -39,7 +39,7 @@ const Post = (props: PostProps) => {
                 props.usersWhoLiked.splice(
                     props.usersWhoLiked.indexOf(
                         localStorage.getItem('userId')!
-                    ), 
+                    ),
                     1
                 );
             } else {

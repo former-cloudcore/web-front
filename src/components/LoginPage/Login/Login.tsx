@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import Alert from '@mui/material/Alert';
-import { loginUser } from '../../utils/user-service';
+import { loginUser } from '../../../utils/user-service';
 import { isAxiosError, AxiosError } from 'axios';
 
 const Login = () => {

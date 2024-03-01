@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { FcGoogle } from 'react-icons/fc';
 import { Link } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
-import { signUpUser } from '../../utils/user-service';
+import { signUpUser } from '../../../utils/user-service';
 import { isAxiosError } from 'axios';
 
 const SignUp = () => {

@@ -1,7 +1,7 @@
 import styles from './Home.module.css';
-import { PostProps } from '../Post/Post';
+import { PostProps } from './Post/Post';
 import { useEffect, useState } from 'react';
-import Post from '../Post/Post';
+import Post from './Post/Post';
 import { getPosts } from '../../utils/posts-service';
 import CreatePostButton from '../CreatePost/CreatePostButton/CreatePostButton';
 
