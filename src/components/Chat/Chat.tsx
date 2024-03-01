@@ -120,21 +120,19 @@ const Chat = () => {
             </div>
             {chatIdState && <div className={styles.chatContent}>
                 {selectedUser && <div className={styles.chatHeader}>
-                    <img src={selectedUser.image} alt={selectedUser.name} />
+                    <img src={selectedUser.image} alt={selectedUser.name}/>
                     <div className={styles.username}>{selectedUser.name}</div>
                 </div>}
                 <div className={styles.chat}>
                     {messagesState.map((message, index) => (
-                        <div>
-                            <div
-                                key={index}
-                                className={classNames(styles.message, {
-                                    [styles.sentByCurrentUser]: message.user === localStorage.getItem('userId'),
-                                    [styles.sentByOtherUser]: message.user !== localStorage.getItem('userId'),
-                                })}
-                            >
-                                {message.text}
-                            </div>
+                        <div
+                            key={index}
+                            className={classNames(styles.message, {
+                                [styles.sentByCurrentUser]: message.user === localStorage.getItem('userId'),
+                                [styles.sentByOtherUser]: message.user !== localStorage.getItem('userId'),
+                            })}
+                        >
+                            {message.text}
                         </div>
                     ))}
                 </div>

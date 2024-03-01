@@ -1,6 +1,7 @@
 .chatContainer {
     display: flex;
-    height: 100%;
+    height: 95%;
+    width: 100%;
 }
 
 .chatSidebar {
@@ -8,15 +9,6 @@
     padding: 20px;
     background-color: #f5f5f5;
     border-right: 1px solid #ddd;
-}
-
-.chatContent {
-    flex: 1;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-    position: relative;
 }
 
 .headerText {
@@ -44,18 +36,27 @@
     margin-bottom: 10px;
     padding: 8px 12px;
     border-radius: 10px;
+    display: flex;
+    max-width: 80%;
 }
 
 .sentByCurrentUser {
-    align-self: flex-end;
+    margin-left: auto;
     background-color: #007bff;
     color: white;
-    direction: rtl;
 }
 
 .sentByOtherUser {
+    align-self: flex-start;
     background-color: #376e37;
     color: white;
+}
+
+.chat {
+    overflow: auto;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .generalButton {
@@ -99,6 +100,9 @@
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    position: sticky;
+    top: 0;
+    background-color: white; /* or any color that matches your design */
 }
 
 .chatHeader img {
@@ -112,3 +116,4 @@
     font-size: 20px;
     font-weight: bold;
 }
+
