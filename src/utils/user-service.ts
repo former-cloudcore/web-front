@@ -21,14 +21,14 @@ export const loginUser = async (
     localStorage.setItem('userId', (await getUser())._id);
 };
 
-interface myUserResponse {
+interface UserResponse {
     _id: string;
     email: string;
     name: string;
     image: string;
     __v: number;
 }
-export const getUser = async (): Promise<myUserResponse> => {
+export const getUser = async (): Promise<UserResponse> => {
     const { data, status } = await apiClient.get('/user/profile', {
         headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -81,4 +81,18 @@ export const uploadImage = async (image: File): Promise<string> => {
         throw new Error('Error uploading image');
     }
     return response.data.url;
+};
+
+export const getUsers = async (): Promise<UserResponse[]> => {
+    const { data, status } = await apiClient.get('/user', {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+    });
+    if (status !== 200) {
+        throw new Error('Error getting users');
+    }
+    console.log(data);
+
+    return data;
 };

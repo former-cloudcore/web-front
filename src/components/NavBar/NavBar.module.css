@@ -12,6 +12,7 @@
     align-items: center;
     background-color: #1e1e1e;
     width: 100%;
+    z-index: 9;
     height: 5rem;
 }
 
