@@ -1,7 +1,22 @@
 import apiClient from './api-client';
 import { PostProps } from '../components/Home/Post/Post';
 
-  interface PostsResponse {
+const DEFAULT_POST = {
+    _id: 'default',
+    text: '',
+    image: '',
+    usersWhoLiked: [],
+    createdBy: {
+        _id: '',
+        name: '',
+        image: '',
+    },
+    date: '',
+    __v: 0,
+    commentsAmount: 0,
+    imagePath: '',
+};
+interface PostsResponse {
     _id: string;
     text: string;
     image: string;
@@ -19,11 +34,12 @@ export const getPosts = async (): Promise<PostProps[]> => {
     const data: PostsResponse[] = (await apiClient.get('/post')).data;
 
     return data.map((post: PostsResponse) => ({
+        ...DEFAULT_POST,
         ...post,
         date: new Date(post.date),
         id: post._id,
         commentsAmount: post.comments_amount,
-        imagePath: post.image,
+        createdBy: post.createdBy || DEFAULT_POST.createdBy, // Add null check here
     }));
 };
 

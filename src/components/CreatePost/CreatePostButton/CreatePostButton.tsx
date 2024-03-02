@@ -1,20 +1,26 @@
 import styles from './CreatePostButton.module.css';
-import { FaPlus } from 'react-icons/fa';
+
 import Tooltip from '@mui/material/Tooltip';
 import { Link } from 'react-router-dom';
+import React from 'react';
 
-const CreatePostButton = () => {
+interface CreatePostButtonProps {
+    linkTo: string;
+    tooltipText: string;
+    icon: React.ElementType;
+}
+const CreatePostButton = (props: CreatePostButtonProps) => {
     return (
         <div className={styles.createPostButton}>
             <Tooltip
                 title={
-                    <div className={styles.toolTipText}>Create a new post </div>
+                    <div className={styles.toolTipText}>{props.tooltipText}</div>
                 }
                 placement="top"
             >
-                <Link to="/createPost">
+                <Link to={props.linkTo}>
                     <div className={styles.createPostButton}>
-                        <FaPlus className={styles.button} />
+                        <props.icon className={styles.button} />
                     </div>
                 </Link>
             </Tooltip>

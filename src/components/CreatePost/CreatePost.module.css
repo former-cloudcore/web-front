@@ -1,43 +1,263 @@
-.notLoggedWrapper {
-    display: flex;
+/*<div className={styles.createPost}>
+            <div className={styles.wrapper}>
+                <div className={styles.title}>Create a new post</div>
+                <div className={styles.userStuff}>
+                    <div className={styles.profileImg}>
+                        <img src={user.image} alt="user image" />
+                    </div>
+                    <div className={styles.userName}>{user.name}</div>
+                </div>
 
+                {image ? (
+                    <div className={styles.uploadedImage}>
+                        <div className={styles.uploadImageButtons}>
+                            <button
+                                className={styles.newImage}
+                                onClick={handleChooseNewImage}
+                            >
+                                Choose New Image
+                            </button>
+                            <button
+                                className={styles.removeImage}
+                                onClick={handleRemoveImage}
+                            >
+                                Remove Image
+                            </button>
+                        </div>
+                        <img src={image} alt="uploaded image" />
+                    </div>
+                ) : (
+                    <div className={styles.uploadImage}>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                        />
+                    </div>
+                )}
+
+                {!image && (
+                    <div className={styles.prompt}>
+                        <input
+                            type="text"
+                            placeholder="Or give your own prompt"
+                        />
+                    </div>
+                )}
+
+                <div className={styles.textArea}>
+                    <textarea
+                        placeholder="Write your post here"
+                        className={styles.textArea}
+                    ></textarea>{' '}
+                </div>
+                <div className={styles.buttons}>
+                    <Link to="/">
+                        <button className={styles.cancel}>Cancel</button>
+                    </Link>
+                    <button className={styles.post}>Post</button>
+                </div>
+            </div>
+        </div>*/
+
+.createPost {
+    display: flex;
     justify-content: center;
-    align-items: center;
-    height: 70%;
-    width: 100%;
+    padding-top: 10rem;
+    height: 100vh;
 }
+
 .wrapper {
+    background-color: #f2f2f2;
+    padding: 1rem;
+    border-radius: 5px;
+    width: 50rem;
+    height: 50rem;
+    border: 1px solid #61b41e;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.inputWrapper {
+    margin-bottom: 10px;
+}
+
+.input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.buttonWrapper {
+    text-align: center;
+}
+
+.submit {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.userStuff {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 1rem;
+    padding-left: 2rem;
+    padding-bottom: 1rem;
+    gap: 1rem;
+}
+
+.profileImg img {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.username {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #61b41e;
+    text-align: left;
+    text-decoration-line: underline;
+}
+
+/* Additional styles for unstyled elements */
+
+.createPost input[type='file'] {
+    width: 90%;
+    margin-left: 4%;
+    padding: 1%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.imageExplanationText{
+    margin-left: 5%;
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+
+}
+/* Styles for new elements */
+
+.uploadedImage {
     display: flex;
     flex-direction: column;
-    background-color: white;
-    border: 1px solid #61b41e;
-    padding: 1rem;
-    border-radius: 1rem;
-}
-.notLogged {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 1rem;
-}
-
-.linksWrapper {
-    display: flex;
-    justify-content: space-around;
     align-items: center;
     margin-top: 1rem;
-    margin-bottom: 1rem;
 }
 
-.link {
-    text-decoration: none;
-    color: white;
-    font-size: 1.5rem;
-    width: 6rem;
-    padding: 1rem;
-    border-radius: 1rem;
-    background-color: #61b41e;
+.uploadedImage img {
+    width: 40rem;
+    height: 20rem;
+    border-radius: 5px;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+}
+.uploadImageButtons {
+    display: flex;
+
+    justify-content: space-around;
+    width: 20rem;
+    margin-bottom: 1rem;
+}
+.removeImage {
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    text-align: center;
+
+    &:hover {
+        background-color: #bd2130;
+    }
+}
+
+.newImage {
+    padding: 5px 10px;
+    background-color: #61b41e;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #428110;
+    }
+}
+
+.uploadImage {
+    margin-top: 1rem;
+}
+
+.prompt input[type='text'] {
+    width: 90%;
+    margin-left: 4%;
+    padding: 1%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+}
+
+
+.textArea{
+    width: 90%;
+    margin-left: 4%;
+    margin-top: 1rem;
+    padding: 1%;
+    height: 5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+    
+
+}
+
+.buttomButtons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1rem;
+}
+
+.cancel {
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #bd2130;
+    }
+}
+
+.post {
+    padding: 5px 10px;
+    background-color: #61b41e;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 
     &:hover {
         background-color: #428110;

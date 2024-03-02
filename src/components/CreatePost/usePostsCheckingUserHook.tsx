@@ -1,5 +1,5 @@
-import styles from './CreatePost.module.css';
-import { getUser } from '../../utils/user-service';
+import styles from './userNotLoggedIn.module.css';
+import { UserResponse, getUser } from '../../utils/user-service';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
@@ -7,16 +7,19 @@ interface usePostCheckingUserHookReturn {
     loggedIn: boolean;
     loading: boolean;
     notLoggedInRender: JSX.Element;
+    user: UserResponse;
 }
 
 const usePostCheckingUserHook = (): usePostCheckingUserHookReturn => {
     const [loggedIn, setLoggedIn] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState<UserResponse>({} as UserResponse);
     useEffect(() => {
         (async () => {
             try {
-                const user = await getUser();
+                const user: UserResponse = await getUser();
                 if (user) {
+                    setUser(user);
                     setLoggedIn(true);
                 }
             } catch (error) {
@@ -51,7 +54,7 @@ const usePostCheckingUserHook = (): usePostCheckingUserHookReturn => {
         </div>
     );
 
-    return { loggedIn, loading, notLoggedInRender };
+    return { loggedIn, loading, notLoggedInRender, user };
 };
 
 export default usePostCheckingUserHook;
