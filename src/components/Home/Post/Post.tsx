@@ -81,7 +81,7 @@ const Post = (props: PostProps) => {
                     }}
                 />
             </div>
-            <div className={styles.usernameWrapper}>
+            <div className={styles.middlePart}>
                 <img
                     src={props.createdBy.image}
                     className={styles.profileImg}
@@ -89,10 +89,16 @@ const Post = (props: PostProps) => {
                         event.currentTarget.src = DEFAULT_IMAGE;
                     }}
                 />
-                <div className={styles.username}>{props.createdBy.name}</div>
-            </div>
-            <div className={styles.postTextWrapper}>
-                <div className={styles.postText}>{props.text}</div>
+                <div className={styles.middleRightPart}>
+                    <div className={styles.usernameWrapper}>
+                        <div className={styles.username}>
+                            {props.createdBy.name}
+                        </div>
+                    </div>
+                    <div className={styles.postTextWrapper}>
+                        <div className={styles.postText}>{props.text}</div>
+                    </div>
+                </div>
             </div>
             <div className={styles.footer}>
                 <div className={styles.likeWrapper}>
