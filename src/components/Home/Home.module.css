@@ -21,3 +21,9 @@
     right: 15vw;
     bottom: 20vh;
 }
+
+.chatButtonWrapper{
+    position: absolute;
+    left: 15vw;
+    bottom: 20vh;
+}
