@@ -1,10 +1,14 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import socketIOClient from 'socket.io-client';
 import classNames from 'classnames';
-import {getChatsByUser, getChatMessages, createChat} from '../../utils/chat-service.ts';
-import {getUsers} from "../../utils/user-service.ts";
+import {
+    getChatsByUser,
+    getChatMessages,
+    createChat,
+} from '../../utils/chat-service.ts';
+import { getUsers } from '../../utils/user-service.ts';
 import styles from './Chat.module.css';
-import {SERVER_URL} from "../../utils/consts.ts";
+import { SERVER_URL } from '../../utils/consts.ts';
 
 const Chat = () => {
     const [chatIdState, setChatIdState] = useState('');
@@ -20,7 +24,9 @@ const Chat = () => {
     useEffect(() => {
         const fetchChatsAndUsers = async () => {
             const chats = await getChatsByUser();
-            const users = (await getUsers()).filter(user => user._id !== localStorage.getItem('userId'));
+            const users = (await getUsers()).filter(
+                (user) => user._id !== localStorage.getItem('userId')
+            );
             setChatsState(chats);
             setUsersState(users);
         };
@@ -57,25 +63,31 @@ const Chat = () => {
             socket?.emit('sendMessage', {
                 chatId: chatIdState,
                 message: messageState,
-                token: localStorage.getItem('accessToken')
+                token: localStorage.getItem('accessToken'),
             });
             setMessageState('');
         } catch (error) {
-            setErrorState('An error occurred while sending the message. Please try again later.');
+            setErrorState(
+                'An error occurred while sending the message. Please try again later.'
+            );
         }
     };
 
     const handleNewChat = async () => {
         try {
-            const existingChat = chatsState.find(chat =>
-                chat.users.includes(newChatUserState) &&
-                chat.users.includes(localStorage.getItem('userId'))
+            const existingChat = chatsState.find(
+                (chat) =>
+                    chat.users.includes(newChatUserState) &&
+                    chat.users.includes(localStorage.getItem('userId'))
             );
 
             if (existingChat) {
                 setErrorState('Chat already exists with this user');
             } else {
-                const chat = await createChat([newChatUserState, localStorage.getItem('userId')]);
+                const chat = await createChat([
+                    newChatUserState,
+                    localStorage.getItem('userId'),
+                ]);
                 setChatsState([...chatsState, chat]);
                 setNewChatUserState('');
                 setChatIdState(chat._id);
@@ -84,13 +96,19 @@ const Chat = () => {
                 setIsNewChat(false);
             }
         } catch (error) {
-            setErrorState('An error occurred while creating chat. Please try again later.');
+            setErrorState(
+                'An error occurred while creating chat. Please try again later.'
+            );
         }
     };
 
-    const selectedChat = chatsState.find(chat => chat._id === chatIdState);
-    const otherUserId = selectedChat && selectedChat.users.find(userId => userId !== localStorage.getItem('userId'));
-    const selectedUser = usersState.find(user => user._id === otherUserId);
+    const selectedChat = chatsState.find((chat) => chat._id === chatIdState);
+    const otherUserId =
+        selectedChat &&
+        selectedChat.users.find(
+            (userId) => userId !== localStorage.getItem('userId')
+        );
+    const selectedUser = usersState.find((user) => user._id === otherUserId);
 
     return (
         <div className={styles.chatContainer}>
@@ -104,10 +122,19 @@ const Chat = () => {
                     onChange={(e) => handleOpenChat(e.target.value)}
                 >
                     <option value="">Select</option>
-                    {chatsState.map(chat => {
-                        const otherUserId = chat.users.find(userId => userId !== localStorage.getItem('userId'));
-                        const otherUser = usersState.find(user => user._id === otherUserId);
-                        return <option key={chat._id} value={chat._id}>{otherUser?.name || 'Unknown'}</option>;
+                    {chatsState.map((chat) => {
+                        const otherUserId = chat.users.find(
+                            (userId) =>
+                                userId !== localStorage.getItem('userId')
+                        );
+                        const otherUser = usersState.find(
+                            (user) => user._id === otherUserId
+                        );
+                        return (
+                            <option key={chat._id} value={chat._id}>
+                                {otherUser?.name || 'Unknown'}
+                            </option>
+                        );
                     })}
                 </select>
                 <select
@@ -117,54 +144,90 @@ const Chat = () => {
                     onChange={(e) => setNewChatUserState(e.target.value)}
                 >
                     <option value="">Select a user</option>
-                    {usersState.filter(user => !chatsState.find(chat => chat.users.includes(user._id))).map(user => (
-                        <option key={user._id} value={user._id}>{user.name || 'Unknown'}</option>
-                    ))}
+                    {usersState
+                        .filter(
+                            (user) =>
+                                !chatsState.find((chat) =>
+                                    chat.users.includes(user._id)
+                                )
+                        )
+                        .map((user) => (
+                            <option key={user._id} value={user._id}>
+                                {user.name || 'Unknown'}
+                            </option>
+                        ))}
                 </select>
                 <button
                     className={styles.generalButton}
                     onClick={handleNewChat}
                     disabled={!newChatUserState}
-                >New Chat
+                >
+                    New Chat
                 </button>
             </div>
-            {chatIdState && <div className={styles.chatContent}>
-                {selectedUser && <div className={styles.chatHeader}>
-                    <img src={selectedUser.image} alt={selectedUser.name}/>
-                    <div className={styles.username}>{selectedUser.name}</div>
-                </div>}
-                <div className={styles.chat}>
-                    {messagesState.map((message, index) => (
-                        <div
-                            key={index}
-                            className={classNames(styles.message, {
-                                [styles.sentByCurrentUser]: message.user === localStorage.getItem('userId'),
-                                [styles.sentByOtherUser]: message.user !== localStorage.getItem('userId'),
-                            })}
-                        >
-                            {message.text}
+            {chatIdState && (
+                <div className={styles.chatContent}>
+                    {selectedUser && (
+                        <div className={styles.chatHeader}>
+                            <img
+                                src={selectedUser.image}
+                                alt={selectedUser.name}
+                            />
+                            <div className={styles.username}>
+                                {selectedUser.name}
+                            </div>
                         </div>
-                    ))}
+                    )}
+                    <div className={styles.chat}>
+                        {messagesState.map((message, index) => (
+                            <div
+                                key={index}
+                                className={classNames(styles.message, {
+                                    [styles.sentByCurrentUser]:
+                                        message.user ===
+                                        localStorage.getItem('userId'),
+                                    [styles.sentByOtherUser]:
+                                        message.user !==
+                                        localStorage.getItem('userId'),
+                                })}
+                            >
+                                {message.text}
+                            </div>
+                        ))}
+                    </div>
+                    {!isNewChat && (
+                        <div className={styles.sendMessage}>
+                            <input
+                                name="message"
+                                placeholder="Type here..."
+                                type="text"
+                                value={messageState}
+                                className={classNames(
+                                    styles.input,
+                                    styles.messageInput
+                                )}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        handleSendMessage();
+                                    }
+                                }}
+                                onChange={(e) => {
+                                    setMessageState(e.target.value);
+                                }}
+                            />
+                            <button
+                                className={styles.generalButton}
+                                onClick={handleSendMessage}
+                                disabled={!messageState.trim()}
+                            >
+                                Send
+                            </button>
+                        </div>
+                    )}
                 </div>
-                {!isNewChat && <div className={styles.sendMessage}>
-                    <input
-                        name="message"
-                        placeholder="Type here..."
-                        type="text"
-                        value={messageState}
-                        className={classNames(styles.input, styles.messageInput)}
-                        onChange={(e) => setMessageState(e.target.value)}
-                    />
-                    <button
-                        className={styles.generalButton}
-                        onClick={handleSendMessage}
-                        disabled={!messageState.trim()}
-                    >Send
-                    </button>
-                </div>}
-            </div>}
+            )}
         </div>
     );
-}
+};
 
 export default Chat;
