@@ -79,9 +79,9 @@ const Chat = () => {
                 setChatsState([...chatsState, chat]);
                 setNewChatUserState('');
                 setChatIdState(chat._id);
-                const messages = await getChatMessages(chat._id);
-                setMessagesState(messages);
-                setIsNewChat(false); // Set isNewChat to false
+                setMessagesState([]);
+                socket?.emit('joinRoom', chat._id);
+                setIsNewChat(false);
             }
         } catch (error) {
             setErrorState('An error occurred while creating chat. Please try again later.');
