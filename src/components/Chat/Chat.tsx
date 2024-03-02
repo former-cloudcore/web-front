@@ -30,16 +30,26 @@ const Chat = () => {
     useEffect(() => {
         const newSocket = socketIOClient(SERVER_URL);
         setSocket(newSocket);
-        newSocket.on('message', (convo) => setMessagesState(() => JSON.parse(convo)));
+        newSocket.on('message', (convo) => {
+            try {
+                setMessagesState(convo);
+            } catch (error) {
+                console.error('Failed to parse message:', error);
+            }
+        });
         return () => newSocket.disconnect();
     }, []);
 
     const handleOpenChat = async (chatId) => {
+        if (chatIdState) {
+            socket?.emit('leaveRoom', chatIdState);
+        }
+
         const messages = chatId.length ? await getChatMessages(chatId) : [];
         setMessagesState(messages);
         setChatIdState(chatId);
         socket?.emit('joinRoom', chatId);
-        setIsNewChat(false); // Set isNewChat to false
+        setIsNewChat(false);
     };
 
     const handleSendMessage = async () => {
