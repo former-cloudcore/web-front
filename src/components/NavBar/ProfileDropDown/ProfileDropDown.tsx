@@ -3,6 +3,7 @@ import styles from './ProfileDropDown.module.css';
 import { getUser } from '../../../utils/user-service';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { SERVER_URL } from '../../../utils/consts';
 
 const ProfileDropDown = () => {
     const [enchorEl, setEnchorEl] = useState<null | HTMLElement>(null);
@@ -11,7 +12,7 @@ const ProfileDropDown = () => {
 
     useEffect(() => {
         (async () => {
-            setImage((await getUser()).image);
+            setImage(SERVER_URL + (await getUser()).image);
         })();
     }, []);
 
@@ -23,14 +24,11 @@ const ProfileDropDown = () => {
     };
     return (
         <div className={styles.profileDropDown}>
-            <div className={styles.imgWrapper} onClick={(e) => setEnchorEl(e.currentTarget)}>
-                
-                <img
-                    className={styles.profileImg}
-                    src={image}
-                    alt="Profile"
-                    
-                />
+            <div
+                className={styles.imgWrapper}
+                onClick={(e) => setEnchorEl(e.currentTarget)}
+            >
+                <img className={styles.profileImg} src={image} alt="Profile" />
             </div>
             <Menu
                 id="basic-menu"

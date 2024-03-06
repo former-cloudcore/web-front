@@ -4,53 +4,62 @@ import usePostCheckingUserHook from './usePostsCheckingUserHook';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { Modal, Box, Typography } from '@mui/material';
+import {
+    createPostWithImage,
+    createPostWithPrompt,
+} from '../../utils/posts-service';
+import { SERVER_URL } from '../../utils/consts';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const CreatePost = () => {
     const { loggedIn, loading, notLoggedInRender, user } =
         usePostCheckingUserHook();
-    const [image, setImage] = useState<string | null>(null);
+    const [imageState, setImageState] = useState<File>();
     const [postBody, setPostBody] = useState<string>('');
     const [isPostBodyEmpty, setIsPostBodyEmpty] = useState<boolean>(false);
     const [open, setOpen] = useState<boolean>(false);
+    const [prompt, setPrompt] = useState<string>('');
+    const [loadingState, setLoadingState] = useState<boolean>(false);
 
-    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setImage(reader.result as string);
-            };
-            reader.readAsDataURL(file);
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            setImageState(e.target.files[0]);
         }
     };
 
     const handleRemoveImage = () => {
-        setImage(null);
+        setImageState(undefined);
     };
 
     const handleChooseNewImage = () => {
         const inputElement = document.createElement('input');
         inputElement.type = 'file';
         inputElement.accept = 'image/*';
-        inputElement.onchange = (event) => {
-            const file = (event.target as HTMLInputElement)?.files?.[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    setImage(reader.result as string);
-                };
-                reader.readAsDataURL(file);
-            }
-        };
+        inputElement.onchange = (e: Event) =>
+            handleImageChange(
+                e as unknown as React.ChangeEvent<HTMLInputElement>
+            );
         inputElement.click();
     };
 
-    const handlePost = () => {
+    const handlePost = async () => {
         if (postBody.trim() === '') {
             setIsPostBodyEmpty(true);
             setOpen(true);
-
             return;
+        }
+        try {
+            if (imageState) {
+                await createPostWithImage(postBody, imageState);
+                window.location.href = '/';
+            } else {
+                setLoadingState(true);
+
+                await createPostWithPrompt(postBody, prompt || postBody);
+                window.location.href = '/';
+            }
+        } catch (error) {
+            console.log(error);
         }
 
         // Perform the post action here
@@ -71,6 +80,18 @@ const CreatePost = () => {
         </Modal>
     );
 
+    const spinnerModal = (
+        <Modal
+            open={true}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Box className={styles.spinnerBox}>
+                <CircularProgress size="10rem"/>
+            </Box>
+        </Modal>
+    );
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -80,16 +101,17 @@ const CreatePost = () => {
 
     return (
         <div className={styles.createPost}>
+            {loadingState ? spinnerModal : null}
             {emptyPostModal}
             <div className={styles.wrapper}>
                 <div className={styles.title}>Create a new post</div>
                 <div className={styles.userStuff}>
                     <div className={styles.profileImg}>
-                        <img src={user.image} alt="user image" />
+                        <img src={SERVER_URL + user.image} alt="user image" />
                     </div>
                     <div className={styles.userName}>{user.name}</div>
                 </div>
-                {image ? (
+                {imageState ? (
                     <div className={styles.uploadedImage}>
                         <div className={styles.uploadImageButtons}>
                             <button
@@ -105,7 +127,10 @@ const CreatePost = () => {
                                 Remove Image
                             </button>
                         </div>
-                        <img src={image} alt="uploaded image" />
+                        <img
+                            src={URL.createObjectURL(imageState)}
+                            alt="uploaded image"
+                        />
                     </div>
                 ) : (
                     <>
@@ -124,6 +149,8 @@ const CreatePost = () => {
                             <input
                                 type="text"
                                 placeholder="Or give your own prompt"
+                                value={prompt}
+                                onChange={(e) => setPrompt(e.target.value)}
                             />
                         </div>
                     </>

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import { loginUser } from '../../../utils/user-service';
 import { isAxiosError, AxiosError } from 'axios';
-import GoogleLoginButton from '../GoogleLoginButton/googleLoginButton';
+import GoogleLoginButton from '../GoogleLoginButton/GoogleLoginButton';
 
 const Login = () => {
     const [emailState, setEmailState] = React.useState('');

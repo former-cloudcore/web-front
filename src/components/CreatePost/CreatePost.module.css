@@ -279,3 +279,15 @@
 
     padding: 2rem;
 }
+
+.spinnerBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.spinner{
+    size: 20rem;
+}

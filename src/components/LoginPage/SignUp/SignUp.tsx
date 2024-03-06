@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styles from './SignUp.module.css';
 import classNames from 'classnames';
-import GoogleLoginButton from '../GoogleLoginButton/googleLoginButton';
+import GoogleLoginButton from '../GoogleLoginButton/GoogleLoginButton';
 import { Link } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import { signUpUser } from '../../../utils/user-service';
