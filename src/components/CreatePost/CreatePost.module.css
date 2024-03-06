@@ -263,3 +263,7 @@
         background-color: #428110;
     }
 }
+
+.emptyPostBody{
+    border: 1px solid red;
+}

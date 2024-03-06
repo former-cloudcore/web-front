@@ -2,11 +2,14 @@ import { useState } from 'react';
 import styles from './CreatePost.module.css';
 import usePostCheckingUserHook from './usePostsCheckingUserHook';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 
 const CreatePost = () => {
     const { loggedIn, loading, notLoggedInRender, user } =
         usePostCheckingUserHook();
     const [image, setImage] = useState<string | null>(null);
+    const [postBody, setPostBody] = useState<string>('');
+    const [isPostBodyEmpty, setIsPostBodyEmpty] = useState<boolean>(false);
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -38,6 +41,15 @@ const CreatePost = () => {
             }
         };
         inputElement.click();
+    };
+
+    const handlePost = () => {
+        if (postBody.trim() === '') {
+            setIsPostBodyEmpty(true);
+            return;
+        }
+
+        // Perform the post action here
     };
 
     if (loading) {
@@ -98,10 +110,17 @@ const CreatePost = () => {
 
                 <textarea
                     placeholder="Write your post here"
-                    className={styles.textArea}
+                    className={classNames(styles.textArea,{[styles.emptyPostBody]:isPostBodyEmpty})}
+                    value={postBody}
+                    onChange={(event) => {
+                        setPostBody(event.target.value);
+                        setIsPostBodyEmpty(false);
+                    }}
                 ></textarea>
                 <div className={styles.buttomButtons}>
-                    <button className={styles.post}>Post</button>
+                    <button className={styles.post} onClick={handlePost}>
+                        Post
+                    </button>
                     <Link to="/">
                         <button className={styles.cancel}>Cancel</button>
                     </Link>

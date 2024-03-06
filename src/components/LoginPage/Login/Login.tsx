@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import Alert from '@mui/material/Alert';
-import { loginUser } from '../../../utils/user-service';
+import { googleSignin, loginUser } from '../../../utils/user-service';
 import { isAxiosError, AxiosError } from 'axios';
 import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
 
@@ -30,9 +30,10 @@ const Login = () => {
         credentialResponse: CredentialResponse
     ) => {
         console.log(credentialResponse);
+        if (!credentialResponse.credential) return;
         try {
-            // const res = await googleSignin(credentialResponse)
-            console.log(res);
+            await googleSignin(credentialResponse.credential);
+            window.location.href = '/';
         } catch (e) {
             console.log(e);
         }

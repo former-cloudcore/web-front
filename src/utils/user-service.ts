@@ -31,7 +31,7 @@ export interface UserResponse {
 }
 export const getUser = async (): Promise<UserResponse> => {
     console.log('getting user');
-    
+
     const { data, status } = await apiClient.get('/user/profile');
     if (status !== 200) {
         throw new Error('Error getting user');
@@ -76,4 +76,16 @@ export const getUsers = async (): Promise<UserResponse[]> => {
     }
 
     return data;
+};
+
+export const googleSignin = async (tokenId: string): Promise<void> => {
+    const { data, status } = await apiClient.post('/auth/google', {
+        credential: tokenId,
+    });
+    if (status !== 200) {
+        throw new Error('Error logging in with Google');
+    }
+    localStorage.setItem('accessToken', data.accessToken);
+    localStorage.setItem('refreshToken', data.refreshToken);
+    localStorage.setItem('userId', (await getUser())._id);
 };
