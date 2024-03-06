@@ -30,11 +30,7 @@ export interface UserResponse {
     __v: number;
 }
 export const getUser = async (): Promise<UserResponse> => {
-    const { data, status } = await apiClient.get('/user/profile', {
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-    });
+    const { data, status } = await apiClient.get('/user/profile');
     if (status !== 200) {
         throw new Error('Error getting user');
     }
@@ -73,11 +69,7 @@ export const signUpUser = async (
 };
 
 export const getUsers = async (): Promise<UserResponse[]> => {
-    const { data, status } = await apiClient.get('/user', {
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-    });
+    const { data, status } = await apiClient.get('/user');
     if (status !== 200) {
         throw new Error('Error getting users');
     }

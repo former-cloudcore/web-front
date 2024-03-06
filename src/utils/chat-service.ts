@@ -8,11 +8,9 @@ export interface ChatResponse {
 }
 
 export const getChatsByUser = async (): Promise<ChatResponse[]> => {
-    const {data, status} = await apiClient.get(`/chat/${localStorage.getItem('userId')}/userChats`, {
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-    });
+    const { data, status } = await apiClient.get(
+        `/chat/${localStorage.getItem('userId')}/userChats`
+    );
     if (status !== 200) {
         throw new Error('Error getting chats');
     }
@@ -20,24 +18,20 @@ export const getChatsByUser = async (): Promise<ChatResponse[]> => {
 };
 
 export const getChatMessages = async (id: string): Promise<string[]> => {
-    const {data, status} = await apiClient.get(`/chat/${id}/messages`, {
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-    });
+    const { data, status } = await apiClient.get(`/chat/${id}/messages`);
     if (status !== 200) {
         throw new Error('Error getting messages');
     }
     return data;
 };
 
-export const postMessage = async (chatId: string, text: string): Promise<void> => {
-    const {status} = await apiClient.post(`/chat/messages`, {
-        text, chatId
-    }, {
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
+export const postMessage = async (
+    chatId: string,
+    text: string
+): Promise<void> => {
+    const { status } = await apiClient.post(`/chat/messages`, {
+        text,
+        chatId,
     });
     if (status !== 200) {
         throw new Error('Error posting message');
@@ -45,12 +39,8 @@ export const postMessage = async (chatId: string, text: string): Promise<void> =
 };
 
 export const createChat = async (users: string[]): Promise<ChatResponse> => {
-    const {data, status} = await apiClient.post('/chat', {
+    const { data, status } = await apiClient.post('/chat', {
         users,
-    }, {
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
     });
     if (status !== 200) {
         throw new Error('Error creating chat');

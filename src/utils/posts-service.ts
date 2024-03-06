@@ -44,25 +44,9 @@ export const getPosts = async (): Promise<PostProps[]> => {
 };
 
 export const likePost = async (postId: string): Promise<void> => {
-    await apiClient.post(
-        `/post/like/${postId}`,
-        {},
-        {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-            },
-        }
-    );
+    await apiClient.post(`/post/like/${postId}`);
 };
 
 export const unlikePost = async (postId: string): Promise<void> => {
-    await apiClient.post(
-        `/post/unlike/${postId}`,
-        {},
-        {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-            },
-        }
-    );
+    await apiClient.post(`/post/unlike/${postId}`);
 };
