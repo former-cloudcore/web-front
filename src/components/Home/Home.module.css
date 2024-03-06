@@ -5,25 +5,33 @@
     overflow-y: auto;
     padding-top: 1rem;
     padding-bottom: 1rem;
-    
+    flex-wrap: wrap;
 }
 
-.postsWrapper{
+.postsWrapper {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    
+
     margin: auto;
 }
 
-.createPostWrapper{
+.createPostWrapper {
     position: absolute;
     right: 15vw;
     bottom: 20vh;
 }
 
-.chatButtonWrapper{
+.chatButtonWrapper {
     position: absolute;
     left: 15vw;
     bottom: 20vh;
+}
+
+.toggleWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
 }
