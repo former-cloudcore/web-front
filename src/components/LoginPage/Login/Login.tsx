@@ -6,6 +6,7 @@ import { FcGoogle } from 'react-icons/fc';
 import Alert from '@mui/material/Alert';
 import { loginUser } from '../../../utils/user-service';
 import { isAxiosError, AxiosError } from 'axios';
+import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
 
 const Login = () => {
     const [emailState, setEmailState] = React.useState('');
@@ -23,6 +24,22 @@ const Login = () => {
                     'An error occurred while logging in. Please try again later.'
                 );
         }
+    };
+
+    const onGoogleLoginSuccess = async (
+        credentialResponse: CredentialResponse
+    ) => {
+        console.log(credentialResponse);
+        try {
+            // const res = await googleSignin(credentialResponse)
+            console.log(res);
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    const onGoogleLoginFailure = () => {
+        console.log('Google login failed');
     };
 
     return (
@@ -70,6 +87,10 @@ const Login = () => {
                             <FcGoogle /> Sign in with Google
                         </div>
                     </button>
+                    <GoogleLogin
+                        onSuccess={onGoogleLoginSuccess}
+                        onError={onGoogleLoginFailure}
+                    />
                 </div>
             </div>
         </div>

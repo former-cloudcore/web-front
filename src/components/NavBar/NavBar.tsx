@@ -3,6 +3,7 @@ import styles from './NavBar.module.css';
 import ProfileDropDown from './ProfileDropDown/ProfileDropDown';
 import { useEffect, useState } from 'react';
 import { getUser } from '../../utils/user-service';
+import { refreshToken } from '../../utils/api-client';
 
 export interface NavBarProps {
     toggleBackground: () => void;
@@ -17,10 +18,16 @@ const NavBar = (props: NavBarProps) => {
                 try {
                     await getUser();
                 } catch (error) {
-                    // If the user is not authenticated, remove the user data from local storage
+                    console.log(error);
+
+                    // try {
+                    //     await refreshToken();
+                    // } catch (error) {
                     localStorage.removeItem('userId');
                     localStorage.removeItem('accessToken');
                     localStorage.removeItem('refreshToken');
+                    // }
+
                     setReload((prev) => prev + 1);
                 }
             }

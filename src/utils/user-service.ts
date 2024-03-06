@@ -30,6 +30,8 @@ export interface UserResponse {
     __v: number;
 }
 export const getUser = async (): Promise<UserResponse> => {
+    console.log('getting user');
+    
     const { data, status } = await apiClient.get('/user/profile');
     if (status !== 200) {
         throw new Error('Error getting user');
@@ -54,7 +56,6 @@ export const signUpUser = async (
     image?: File
 ): Promise<void> => {
     const imageUrl = image ? await uploadImage(image) : undefined;
-    console.log(imageUrl);
 
     const response = await apiClient.post('/auth/register', {
         email,
@@ -73,7 +74,6 @@ export const getUsers = async (): Promise<UserResponse[]> => {
     if (status !== 200) {
         throw new Error('Error getting users');
     }
-    console.log(data);
 
     return data;
 };

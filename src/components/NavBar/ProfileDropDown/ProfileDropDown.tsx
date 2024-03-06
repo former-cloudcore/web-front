@@ -6,8 +6,6 @@ import MenuItem from '@mui/material/MenuItem';
 
 const ProfileDropDown = () => {
     const [enchorEl, setEnchorEl] = useState<null | HTMLElement>(null);
-    console.log(enchorEl);
-
     const open = Boolean(enchorEl);
     const [image, setImage] = useState('');
 
