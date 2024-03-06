@@ -2,11 +2,10 @@ import * as React from 'react';
 import styles from './Login.module.css';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
-import { FcGoogle } from 'react-icons/fc';
 import Alert from '@mui/material/Alert';
-import { googleSignin, loginUser } from '../../../utils/user-service';
+import { loginUser } from '../../../utils/user-service';
 import { isAxiosError, AxiosError } from 'axios';
-import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
+import GoogleLoginButton from '../GoogleLoginButton/googleLoginButton';
 
 const Login = () => {
     const [emailState, setEmailState] = React.useState('');
@@ -24,23 +23,6 @@ const Login = () => {
                     'An error occurred while logging in. Please try again later.'
                 );
         }
-    };
-
-    const onGoogleLoginSuccess = async (
-        credentialResponse: CredentialResponse
-    ) => {
-        console.log(credentialResponse);
-        if (!credentialResponse.credential) return;
-        try {
-            await googleSignin(credentialResponse.credential);
-            window.location.href = '/';
-        } catch (e) {
-            console.log(e);
-        }
-    };
-
-    const onGoogleLoginFailure = () => {
-        console.log('Google login failed');
     };
 
     return (
@@ -83,15 +65,10 @@ const Login = () => {
                             Sign up
                         </button>
                     </Link>
-                    <button className={styles.google}>
-                        <div className={styles.googleText}>
-                            <FcGoogle /> Sign in with Google
-                        </div>
-                    </button>
-                    <GoogleLogin
-                        onSuccess={onGoogleLoginSuccess}
-                        onError={onGoogleLoginFailure}
-                    />
+
+                    <GoogleLoginButton />
+
+                    <div></div>
                 </div>
             </div>
         </div>

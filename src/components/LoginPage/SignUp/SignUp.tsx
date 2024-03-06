@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styles from './SignUp.module.css';
 import classNames from 'classnames';
-import { FcGoogle } from 'react-icons/fc';
+import GoogleLoginButton from '../GoogleLoginButton/googleLoginButton';
 import { Link } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import { signUpUser } from '../../../utils/user-service';
@@ -166,11 +166,7 @@ const SignUp = () => {
                             Already have an account?
                         </button>
                     </Link>
-                    <button className={styles.google}>
-                        <div className={styles.googleText}>
-                            <FcGoogle /> Sign up with Google
-                        </div>
-                    </button>
+                    <GoogleLoginButton />
                 </div>
             </div>
         </div>

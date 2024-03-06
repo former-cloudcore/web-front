@@ -3,6 +3,7 @@ import styles from './CreatePost.module.css';
 import usePostCheckingUserHook from './usePostsCheckingUserHook';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import { Modal, Box, Typography } from '@mui/material';
 
 const CreatePost = () => {
     const { loggedIn, loading, notLoggedInRender, user } =
@@ -10,6 +11,7 @@ const CreatePost = () => {
     const [image, setImage] = useState<string | null>(null);
     const [postBody, setPostBody] = useState<string>('');
     const [isPostBodyEmpty, setIsPostBodyEmpty] = useState<boolean>(false);
+    const [open, setOpen] = useState<boolean>(false);
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -46,11 +48,28 @@ const CreatePost = () => {
     const handlePost = () => {
         if (postBody.trim() === '') {
             setIsPostBodyEmpty(true);
+            setOpen(true);
+
             return;
         }
 
         // Perform the post action here
     };
+
+    const emptyPostModal = (
+        <Modal
+            open={open}
+            onClose={() => setOpen(false)}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Box className={styles.box}>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                    Post body cannot be empty
+                </Typography>
+            </Box>
+        </Modal>
+    );
 
     if (loading) {
         return <div>Loading...</div>;
@@ -58,8 +77,10 @@ const CreatePost = () => {
     if (!loggedIn) {
         return notLoggedInRender;
     }
+
     return (
         <div className={styles.createPost}>
+            {emptyPostModal}
             <div className={styles.wrapper}>
                 <div className={styles.title}>Create a new post</div>
                 <div className={styles.userStuff}>
@@ -110,7 +131,9 @@ const CreatePost = () => {
 
                 <textarea
                     placeholder="Write your post here"
-                    className={classNames(styles.textArea,{[styles.emptyPostBody]:isPostBodyEmpty})}
+                    className={classNames(styles.textArea, {
+                        [styles.emptyPostBody]: isPostBodyEmpty,
+                    })}
                     value={postBody}
                     onChange={(event) => {
                         setPostBody(event.target.value);

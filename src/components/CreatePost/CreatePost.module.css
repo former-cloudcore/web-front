@@ -267,3 +267,15 @@
 .emptyPostBody{
     border: 1px solid red;
 }
+
+.box{
+    position: absolute;
+    margin-top: 50vh;
+    margin-left: 50vw;
+    transform: translate(-50%, -50%);
+    width: 400;
+    background-color: white;
+    border: 1px solid black;
+
+    padding: 2rem;
+}

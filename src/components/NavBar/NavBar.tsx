@@ -20,13 +20,13 @@ const NavBar = (props: NavBarProps) => {
                 } catch (error) {
                     console.log(error);
 
-                    // try {
-                    //     await refreshToken();
-                    // } catch (error) {
+                    try {
+                        await refreshToken();
+                    } catch (error) {
                     localStorage.removeItem('userId');
                     localStorage.removeItem('accessToken');
                     localStorage.removeItem('refreshToken');
-                    // }
+                    }
 
                     setReload((prev) => prev + 1);
                 }
