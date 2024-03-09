@@ -33,7 +33,6 @@ const PostPage = () => {
             try {
                 const data = await getPost(postId);
                 setPost(data);
-                console.log(data);
 
                 setLoading(false);
             } catch (error) {
