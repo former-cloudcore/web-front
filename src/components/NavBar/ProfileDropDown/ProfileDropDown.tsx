@@ -4,6 +4,7 @@ import { getUser } from '../../../utils/user-service';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { formatImage } from '../../../utils/utils';
+import { Link } from 'react-router-dom';
 
 const ProfileDropDown = () => {
     const [enchorEl, setEnchorEl] = useState<null | HTMLElement>(null);
@@ -41,10 +42,9 @@ const ProfileDropDown = () => {
                 }}
                 className={styles.menu}
             >
-                <MenuItem onClick={() => setEnchorEl(null)}>Profile</MenuItem>
-                <MenuItem onClick={() => setEnchorEl(null)}>
-                    My account
-                </MenuItem>
+                <Link to="/profile" className={styles.link}>
+                    <MenuItem>Profile</MenuItem>
+                </Link>
                 <MenuItem onClick={logout}>Logout</MenuItem>
             </Menu>
         </div>

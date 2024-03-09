@@ -6,9 +6,10 @@ import Login from './components/LoginPage/Login/Login';
 import NavBar from './components/NavBar/NavBar';
 import SignUp from './components/LoginPage/SignUp/SignUp';
 import CreatePost from './components/CreatePost/CreatePost';
-import Chat from './components/Chat/Chat'; // Import Chat component
+import Chat from './components/Chat/Chat';
 import classNames from 'classnames';
 import PostPage from './components/PostPage/PostPage';
+import ProfilePage from './components/ProfilePage/ProfilePage';
 
 const App = () => {
     const [backgroundState, setBackgroundState] = React.useState(
@@ -42,6 +43,7 @@ const App = () => {
                     <Route path="createPost" element={<CreatePost />} />
                     <Route path="chat" element={<Chat />} />
                     <Route path="post/:postId" element={<PostPage />} />
+                    <Route path="profile" element={<ProfilePage />} />
                 </Routes>
             </BrowserRouter>
         </div>
