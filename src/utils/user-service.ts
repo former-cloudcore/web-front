@@ -1,5 +1,7 @@
+import axios from 'axios';
 import apiClient from './api-client';
 import { uploadImage } from './file-service';
+import { SERVER_URL } from './consts';
 
 export interface loginInterface {
     email: string;
@@ -89,7 +91,13 @@ export const googleSignin = async (tokenId: string): Promise<void> => {
 };
 
 export const logoutUser = async (): Promise<void> => {
-    await apiClient.get('/auth/logout');
+    
+    const unintercepted = axios.create();
+    await unintercepted.get(`${SERVER_URL}/auth/logout`, {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('refreshToken')}`,
+        },
+    });
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('userId');
