@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './ProfileDropDown.module.css';
-import { getUser } from '../../../utils/user-service';
+import { getUser, logoutUser } from '../../../utils/user-service';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { formatImage } from '../../../utils/utils';
@@ -18,10 +18,8 @@ const ProfileDropDown = () => {
         })();
     }, []);
 
-    const logout = () => {
-        localStorage.removeItem('userId');
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
+    const logout = async () => {
+        await logoutUser();
         window.location.reload();
     };
     return (

@@ -87,3 +87,10 @@ export const googleSignin = async (tokenId: string): Promise<void> => {
     localStorage.setItem('refreshToken', data.refreshToken);
     localStorage.setItem('userId', (await getUser())._id);
 };
+
+export const logoutUser = async (): Promise<void> => {
+    await apiClient.get('/auth/logout');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('userId');
+};
