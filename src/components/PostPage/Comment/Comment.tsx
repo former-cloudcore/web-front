@@ -1,3 +1,4 @@
+import { formatImage } from '../../../utils/utils';
 import styles from './Comment.module.css';
 
 export interface CommentProps {
@@ -10,12 +11,9 @@ const Comment = (props: CommentProps) => {
         <div className={styles.comment}>
             <div className={styles.imageWrapper}>
                 <img
-                    src={props.user.image}
+                    src={formatImage(props.user.image)}
                     className={styles.profileImg}
-                    onError={(event) => {
-                        event.currentTarget.src =
-                            '../../../assets/defaultProfile.png';
-                    }}
+                    alt="user image"
                 />
             </div>
             <div className={styles.rightPart}>

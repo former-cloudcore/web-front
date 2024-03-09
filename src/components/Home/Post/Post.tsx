@@ -11,6 +11,8 @@ import { isAxiosError } from 'axios';
 import { MdDelete } from 'react-icons/md';
 import { formatImage } from '../../../utils/utils';
 import classNames from 'classnames';
+import { MdModeEdit } from 'react-icons/md';
+import EditPostModal from './EditPostModal/EditPostModal';
 
 export interface PostProps {
     id: string;
@@ -37,6 +39,7 @@ const Post = (props: PostProps) => {
     const [open, setOpen] = useState(false);
     const [deleteId, setDeleteId] = useState('' as string | null);
     const [deleted, setDeleted] = useState(false);
+    const [editModalOpen, setEditModalOpen] = useState(false);
 
     const handleLikeCLick = async () => {
         try {
@@ -117,6 +120,7 @@ const Post = (props: PostProps) => {
         >
             {loggedInModal}
             {areYouSureModal}
+            <EditPostModal open={editModalOpen} setOpen={setEditModalOpen} />
             <div
                 className={classNames([
                     styles.imageWrapper,
@@ -159,11 +163,19 @@ const Post = (props: PostProps) => {
                     </div>
                 </div>
                 {props.createdBy._id === localStorage.getItem('userId') && (
-                    <div
-                        className={styles.deleteButton}
-                        onClick={handleDeletePress}
-                    >
-                        <MdDelete />
+                    <div className={styles.buttons}>
+                        <div
+                            className={styles.deleteButton}
+                            onClick={handleDeletePress}
+                        >
+                            <MdDelete />
+                        </div>
+                        <div
+                            className={styles.editButton}
+                            onClick={() => setEditModalOpen(true)}
+                        >
+                            <MdModeEdit />
+                        </div>
                     </div>
                 )}
             </div>
