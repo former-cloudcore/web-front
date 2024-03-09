@@ -10,13 +10,16 @@ import { getUsers } from '../../utils/user-service.ts';
 import styles from './Chat.module.css';
 import { SERVER_URL } from '../../utils/consts.ts';
 import usePostCheckingUserHook from '../CreatePost/usePostsCheckingUserHook.tsx';
+import { ChatResponse } from '../../utils/chat-service.ts';
+import { UserResponse } from '../../utils/user-service.ts';
+import { formatImage } from '../../utils/utils.ts';
 
 const Chat = () => {
     const [chatIdState, setChatIdState] = useState('');
     const [messageState, setMessageState] = useState('');
     const [errorState, setErrorState] = useState('');
-    const [chatsState, setChatsState] = useState([]);
-    const [usersState, setUsersState] = useState([]);
+    const [chatsState, setChatsState] = useState<ChatResponse[]>([]);
+    const [usersState, setUsersState] = useState<UserResponse[]>([]);
     const [newChatUserState, setNewChatUserState] = useState('');
     const [messagesState, setMessagesState] = useState([]);
     const [socket, setSocket] = useState(null);
@@ -182,7 +185,7 @@ const Chat = () => {
                     {selectedUser && (
                         <div className={styles.chatHeader}>
                             <img
-                                src={selectedUser.image}
+                                src={formatImage(selectedUser.image)}
                                 alt={selectedUser.name}
                             />
                             <div className={styles.username}>
@@ -219,7 +222,7 @@ const Chat = () => {
                                     styles.messageInput
                                 )}
                                 onKeyDown={(e) => {
-                                    if (e.key === 'Enter') {
+                                    if (e.key === 'Enter' && messageState.trim()) {
                                         handleSendMessage();
                                     }
                                 }}
