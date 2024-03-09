@@ -3,6 +3,9 @@ import { UserResponse, getUser } from '../../utils/user-service';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
+interface usePostCheckingUserHookProps {
+    middleText: string;
+}
 interface usePostCheckingUserHookReturn {
     loggedIn: boolean;
     loading: boolean;
@@ -10,7 +13,7 @@ interface usePostCheckingUserHookReturn {
     user: UserResponse;
 }
 
-const usePostCheckingUserHook = (): usePostCheckingUserHookReturn => {
+const usePostCheckingUserHook = (props: usePostCheckingUserHookProps): usePostCheckingUserHookReturn => {
     const [loggedIn, setLoggedIn] = useState(false);
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState<UserResponse>({} as UserResponse);
@@ -34,7 +37,7 @@ const usePostCheckingUserHook = (): usePostCheckingUserHookReturn => {
             <div className={styles.wrapper}>
                 <div className={styles.notLogged}>You are not logged in</div>
                 <div className={styles.notLogged}>
-                    Please log in to create a post
+                    {props.middleText}
                 </div>
                 <div className={styles.notLogged}>
                     Or sign up if you don't have an account

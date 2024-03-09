@@ -18,14 +18,12 @@ const NavBar = (props: NavBarProps) => {
                 try {
                     await getUser();
                 } catch (error) {
-                    console.log(error);
-
                     try {
                         await refreshToken();
                     } catch (error) {
-                    localStorage.removeItem('userId');
-                    localStorage.removeItem('accessToken');
-                    localStorage.removeItem('refreshToken');
+                        localStorage.removeItem('userId');
+                        localStorage.removeItem('accessToken');
+                        localStorage.removeItem('refreshToken');
                     }
 
                     setReload((prev) => prev + 1);

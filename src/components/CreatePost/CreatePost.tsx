@@ -13,7 +13,9 @@ import { formatImage } from '../../utils/utils';
 
 const CreatePost = () => {
     const { loggedIn, loading, notLoggedInRender, user } =
-        usePostCheckingUserHook();
+        usePostCheckingUserHook({
+            middleText: 'Please log in to create a post',
+        });
     const [imageState, setImageState] = useState<File>();
     const [postBody, setPostBody] = useState<string>('');
     const [isPostBodyEmpty, setIsPostBodyEmpty] = useState<boolean>(false);

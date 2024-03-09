@@ -9,6 +9,7 @@ import {
 import { getUsers } from '../../utils/user-service.ts';
 import styles from './Chat.module.css';
 import { SERVER_URL } from '../../utils/consts.ts';
+import usePostCheckingUserHook from '../CreatePost/usePostsCheckingUserHook.tsx';
 
 const Chat = () => {
     const [chatIdState, setChatIdState] = useState('');
@@ -20,6 +21,10 @@ const Chat = () => {
     const [messagesState, setMessagesState] = useState([]);
     const [socket, setSocket] = useState(null);
     const [isNewChat, setIsNewChat] = useState(false);
+
+    const { loggedIn, loading, notLoggedInRender } = usePostCheckingUserHook({
+        middleText: 'Please log in to use the chat',
+    });
 
     useEffect(() => {
         const fetchChatsAndUsers = async () => {
@@ -110,6 +115,13 @@ const Chat = () => {
         );
     const selectedUser = usersState.find((user) => user._id === otherUserId);
 
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (!loggedIn) {
+        return notLoggedInRender;
+    }
     return (
         <div className={styles.chatContainer}>
             <div className={styles.chatSidebar}>
