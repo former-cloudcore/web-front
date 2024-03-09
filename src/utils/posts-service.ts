@@ -2,7 +2,7 @@ import apiClient from './api-client';
 import { PostProps } from '../components/Home/Post/Post';
 import { uploadImage } from './file-service';
 
-const DEFAULT_POST = {
+export const DEFAULT_POST = {
     _id: 'default',
     text: '',
     image: '',
@@ -12,10 +12,11 @@ const DEFAULT_POST = {
         name: '',
         image: '',
     },
-    date: '',
+    date: new Date(),
     __v: 0,
     commentsAmount: 0,
     imagePath: '',
+    id: '',
 };
 interface PostsResponse {
     _id: string;
@@ -47,6 +48,45 @@ export const getPosts = async (): Promise<PostProps[]> => {
         .reverse();
 };
 
+export interface fullPostResponse {
+    text: string;
+    image: string;
+    usersWhoLiked: string[];
+    createdBy: {
+        _id: string;
+        name: string;
+        image: string;
+    };
+    date: Date;
+    __v: number;
+    commentsAmount: number;
+    comments: {
+        _id: string;
+        user: {
+            _id: string;
+            name: string;
+            image: string;
+        };
+        text: string;
+    }[];
+    imagePath: string;
+    id: string;
+}
+
+export const getPost = async (postId: string): Promise<fullPostResponse> => {
+    const data = (await apiClient.get(`/post/${postId}`)).data;
+
+    return {
+        ...DEFAULT_POST,
+        ...data,
+        imagePath: data.image,
+        date: new Date(data.date),
+        id: data._id,
+        commentsAmount: data.comments.length,
+        createdBy: data.createdBy || DEFAULT_POST.createdBy, // Add null check here
+    };
+};
+
 export const likePost = async (postId: string): Promise<void> => {
     await apiClient.post(`/post/like/${postId}`);
 };
@@ -60,23 +100,38 @@ export const createPostWithImage = async (
     image: File
 ): Promise<void> => {
     const path = await uploadImage(image);
-    console.log(path);
 
-    const response = await apiClient.post('/post', { text, image: path });
-    console.log(response);
+    await apiClient.post('/post', { text, image: path });
 };
 
 export const createPostWithPrompt = async (
     text: string,
     prompt: string
 ): Promise<void> => {
-    const response = await apiClient.post('/post', {
+    await apiClient.post('/post', {
         text,
         image_prompt: prompt,
     });
-    console.log(response);
 };
 
 export const deletePost = async (postId: string): Promise<void> => {
     await apiClient.delete(`/post/${postId}`);
+};
+
+export const createComment = async (
+    postId: string,
+    text: string
+): Promise<fullPostResponse> => {
+    const data = (await apiClient.post(`/post/comment/${postId}`, { text }))
+        .data;
+
+    return {
+        ...DEFAULT_POST,
+        ...data,
+        imagePath: data.image,
+        date: new Date(data.date),
+        id: data._id,
+        commentsAmount: data.comments.length,
+        createdBy: data.createdBy || DEFAULT_POST.createdBy, // Add null check here
+    };
 };

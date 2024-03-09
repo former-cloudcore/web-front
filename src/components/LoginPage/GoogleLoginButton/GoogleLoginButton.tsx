@@ -5,7 +5,6 @@ const GoogleLoginButton = () => {
     const onGoogleLoginSuccess = async (
         credentialResponse: CredentialResponse
     ) => {
-        console.log(credentialResponse);
         if (!credentialResponse.credential) return;
         try {
             await googleSignin(credentialResponse.credential);

@@ -9,6 +9,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { isAxiosError } from 'axios';
 import { MdDelete } from 'react-icons/md';
+import { formatImage } from '../../../utils/utils';
+import classNames from 'classnames';
 
 export interface PostProps {
     id: string;
@@ -22,6 +24,8 @@ export interface PostProps {
     };
     date: Date;
     commentsAmount: number;
+    onClick?: () => void;
+    postPage?: boolean;
 }
 
 const Post = (props: PostProps) => {
@@ -105,10 +109,21 @@ const Post = (props: PostProps) => {
         return <></>;
     }
     return (
-        <div className={styles.post}>
+        <div
+            className={classNames([
+                styles.post,
+                { [styles.postPage]: props.postPage },
+            ])}
+        >
             {loggedInModal}
             {areYouSureModal}
-            <div className={styles.imageWrapper}>
+            <div
+                className={classNames([
+                    styles.imageWrapper,
+                    { [styles.cursorPointer]: props.onClick },
+                ])}
+                onClick={props.onClick}
+            >
                 <img
                     src={
                         props.imagePath
@@ -125,7 +140,7 @@ const Post = (props: PostProps) => {
                 <img
                     src={
                         props.createdBy.image
-                            ? SERVER_URL + props.createdBy.image
+                            ? formatImage(props.createdBy.image)
                             : DEFAULT_IMAGE
                     }
                     className={styles.profileImg}
@@ -168,7 +183,13 @@ const Post = (props: PostProps) => {
                     </div>
                 </div>
                 <div className={styles.commentAmountWrapper}>
-                    <div className={styles.commentAmount}>
+                    <div
+                        className={classNames([
+                            styles.commentAmount,
+                            { [styles.cursorPointer]: props.onClick },
+                        ])}
+                        onClick={props.onClick}
+                    >
                         {props.commentsAmount} <TfiComment />
                     </div>
                 </div>

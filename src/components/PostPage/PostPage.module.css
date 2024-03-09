@@ -1,0 +1,79 @@
+.postPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1rem;
+    overflow-y: auto;
+}
+
+
+.newComment {
+    position: relative;
+}
+
+.textarea {
+    width: 50rem;
+    height: 10rem;
+    font-size: 1.5rem;
+    resize: none;
+    overflow-y: auto;
+    border-color: #61b41e;
+    border-width: 1px;
+    border-top-width: 0px;
+    
+    &:focus {
+        outline: none;
+    }
+}
+
+.commentButton {
+    position: absolute;
+    top: 40%;
+    right: 3rem;
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    color: #61b41e;
+
+    &:hover {
+        color: #428110;
+    }
+}
+
+.commentsWrapper{
+    margin-bottom: 5rem;
+}
+
+.box{
+    position: absolute;
+    margin-top: 50vh;
+    margin-left: 50vw;
+    transform: translate(-50%, -50%);
+    width: 400;
+    background-color: white;
+    border: 1px solid black;
+
+    padding: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.loginButtonModal{
+    padding: 5px 10px;
+    background-color: #61b41e;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    width: 5rem;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #428110;
+    }
+}

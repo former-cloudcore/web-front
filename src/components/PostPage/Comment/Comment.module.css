@@ -1,0 +1,52 @@
+.comment{
+    display: flex;
+    width: 50rem;
+    height: 5rem;
+    border: 1px solid #61b41e;
+    border-top-width: 0px;
+    
+    
+}
+.imageWrapper{
+    height: 100%;
+    width: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #61b41e;
+    
+}
+.profileImg{
+    width: 4rem;
+    height: 4rem;
+    object-fit: cover;
+    border-radius: 50%;
+
+}
+
+.rightPart{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding-left: 1rem;
+    width: 44rem;
+    max-width: 44rem;
+    overflow: hidden;
+
+}
+
+.user{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #61b41e;
+    text-decoration-line: underline;
+    font-weight: bolder;
+}
+
+.commentText{
+    font-size: 1.5rem;
+    word-wrap: break-word;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}

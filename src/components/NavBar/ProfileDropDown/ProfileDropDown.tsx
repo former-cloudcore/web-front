@@ -3,7 +3,7 @@ import styles from './ProfileDropDown.module.css';
 import { getUser } from '../../../utils/user-service';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { SERVER_URL } from '../../../utils/consts';
+import { formatImage } from '../../../utils/utils';
 
 const ProfileDropDown = () => {
     const [enchorEl, setEnchorEl] = useState<null | HTMLElement>(null);
@@ -12,7 +12,8 @@ const ProfileDropDown = () => {
 
     useEffect(() => {
         (async () => {
-            setImage(SERVER_URL + (await getUser()).image);
+            const user = await getUser();
+            setImage(formatImage(user.image));
         })();
     }, []);
 

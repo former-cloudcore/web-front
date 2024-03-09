@@ -14,8 +14,6 @@ apiClient.interceptors.request.use((config) => {
 });
 
 export const refreshToken = async () => {
-    console.log('refreshing token');
-    
     const refreshToken = localStorage.getItem('refreshToken');
     if (!refreshToken) {
         throw new Error('No refresh token found');

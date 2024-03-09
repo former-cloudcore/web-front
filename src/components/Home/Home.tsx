@@ -31,7 +31,15 @@ const Home = () => {
     }, [onlyMyPosts, posts]);
 
     const renderPosts = filteredPosts.map((post) => {
-        return <Post {...post} key={post.id} />;
+        return (
+            <Post
+                {...post}
+                key={post.id}
+                onClick={() => {
+                    window.location.href = `post/${post.id}`;
+                }}
+            />
+        );
     });
 
     return (

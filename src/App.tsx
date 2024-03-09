@@ -8,6 +8,7 @@ import SignUp from './components/LoginPage/SignUp/SignUp';
 import CreatePost from './components/CreatePost/CreatePost';
 import Chat from './components/Chat/Chat'; // Import Chat component
 import classNames from 'classnames';
+import PostPage from './components/PostPage/PostPage';
 
 const App = () => {
     const [backgroundState, setBackgroundState] = React.useState(
@@ -40,6 +41,7 @@ const App = () => {
                     <Route path="signup" element={<SignUp />} />
                     <Route path="createPost" element={<CreatePost />} />
                     <Route path="chat" element={<Chat />} />
+                    <Route path="post/:postId" element={<PostPage />} />
                 </Routes>
             </BrowserRouter>
         </div>

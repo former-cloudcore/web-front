@@ -30,8 +30,6 @@ export interface UserResponse {
     __v: number;
 }
 export const getUser = async (): Promise<UserResponse> => {
-    console.log('getting user');
-
     const { data, status } = await apiClient.get('/user/profile');
     if (status !== 200) {
         throw new Error('Error getting user');

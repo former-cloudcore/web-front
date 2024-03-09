@@ -163,3 +163,12 @@
     overflow-x: auto;
     scrollbar-width: thin;
 }
+
+.cursorPointer{
+    cursor: pointer;
+}
+
+.postPage{
+    border-bottom-left-radius: 0%;
+    border-bottom-right-radius: 0%;
+}

@@ -8,8 +8,8 @@ import {
     createPostWithImage,
     createPostWithPrompt,
 } from '../../utils/posts-service';
-import { SERVER_URL } from '../../utils/consts';
 import CircularProgress from '@mui/material/CircularProgress';
+import { formatImage } from '../../utils/utils';
 
 const CreatePost = () => {
     const { loggedIn, loading, notLoggedInRender, user } =
@@ -87,7 +87,8 @@ const CreatePost = () => {
             aria-describedby="modal-modal-description"
         >
             <Box className={styles.spinnerBox}>
-                <CircularProgress size="10rem"/>
+                Generating image
+                <CircularProgress size="10rem" />
             </Box>
         </Modal>
     );
@@ -107,7 +108,7 @@ const CreatePost = () => {
                 <div className={styles.title}>Create a new post</div>
                 <div className={styles.userStuff}>
                     <div className={styles.profileImg}>
-                        <img src={SERVER_URL + user.image} alt="user image" />
+                        <img src={formatImage(user.image)} alt="user image" />
                     </div>
                     <div className={styles.userName}>{user.name}</div>
                 </div>
