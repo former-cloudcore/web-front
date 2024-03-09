@@ -135,3 +135,23 @@ export const createComment = async (
         createdBy: data.createdBy || DEFAULT_POST.createdBy, // Add null check here
     };
 };
+
+export const updatePost = async (
+    postId: string,
+    text?: string,
+    image?: File
+): Promise<void> => {
+    const body: {
+        _id: string;
+        text?: string;
+        image?: string;
+    } = { _id: postId };
+    if (text) {
+        body['text'] = text;
+    }
+    if (image) {
+        body['image'] = await uploadImage(image);
+    }
+
+    await apiClient.put(`/post`, body);
+};

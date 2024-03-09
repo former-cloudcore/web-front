@@ -92,6 +92,7 @@ const PostPage = () => {
                 {...post}
                 postPage={true}
                 commentsAmount={post.commentsAmount}
+                reloadPosts={() => setTriggerRefresh((prev) => prev + 1)}
             />
             <div className={styles.newComment}>
                 <textarea

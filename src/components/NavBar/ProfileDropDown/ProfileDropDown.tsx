@@ -28,7 +28,11 @@ const ProfileDropDown = () => {
                 className={styles.imgWrapper}
                 onClick={(e) => setEnchorEl(e.currentTarget)}
             >
-                <img className={styles.profileImg} src={image} alt="Profile" />
+                <img
+                    className={styles.profileImg}
+                    src={formatImage(image)}
+                    alt="Profile"
+                />
             </div>
             <Menu
                 id="basic-menu"

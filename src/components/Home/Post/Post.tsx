@@ -28,6 +28,7 @@ export interface PostProps {
     commentsAmount: number;
     onClick?: () => void;
     postPage?: boolean;
+    reloadPosts?: () => void;
 }
 
 const Post = (props: PostProps) => {
@@ -120,7 +121,13 @@ const Post = (props: PostProps) => {
         >
             {loggedInModal}
             {areYouSureModal}
-            <EditPostModal open={editModalOpen} setOpen={setEditModalOpen} />
+            <EditPostModal
+                open={editModalOpen}
+                setOpen={setEditModalOpen}
+                postId={props.id}
+                key={props.id}
+                reloadPosts={props.reloadPosts ?? (() => {})}
+            />
             <div
                 className={classNames([
                     styles.imageWrapper,

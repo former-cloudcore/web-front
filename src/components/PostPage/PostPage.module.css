@@ -6,7 +6,6 @@
     overflow-y: auto;
 }
 
-
 .newComment {
     position: relative;
 }
@@ -20,7 +19,8 @@
     border-color: #61b41e;
     border-width: 1px;
     border-top-width: 0px;
-    
+    outline: none;
+
     &:focus {
         outline: none;
     }
@@ -40,11 +40,11 @@
     }
 }
 
-.commentsWrapper{
+.commentsWrapper {
     margin-bottom: 5rem;
 }
 
-.box{
+.box {
     position: absolute;
     margin-top: 50vh;
     margin-left: 50vw;
@@ -60,10 +60,9 @@
     gap: 2rem;
     justify-content: center;
     align-items: center;
-    
 }
 
-.loginButtonModal{
+.loginButtonModal {
     padding: 5px 10px;
     background-color: #61b41e;
     color: #fff;

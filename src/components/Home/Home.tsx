@@ -12,12 +12,13 @@ const Home = () => {
     const [posts, setPosts] = useState<PostProps[]>([]);
     const [filteredPosts, setFilteredPosts] = useState<PostProps[]>([]);
     const [onlyMyPosts, setOnlyMyPosts] = useState(false);
+    const [reloadPosts, setReloadPosts] = useState(0);
     useEffect(() => {
         (async () => {
             const posts = await getPosts();
             setPosts(posts);
         })();
-    }, []);
+    }, [reloadPosts]);
 
     useEffect(() => {
         setFilteredPosts(
@@ -38,6 +39,7 @@ const Home = () => {
                 onClick={() => {
                     window.location.href = `post/${post.id}`;
                 }}
+                reloadPosts={() => setReloadPosts((prev) => prev + 1)}
             />
         );
     });
@@ -46,10 +48,14 @@ const Home = () => {
         <div className={styles.home}>
             {localStorage.getItem('userId') ? (
                 <div className={styles.toggleWrapper}>
-                    <Switch
-                        onChange={() => setOnlyMyPosts((checked) => !checked)}
-                    />
-                    Only show my posts
+                    <div className={styles.toggle}>
+                        <Switch
+                            onChange={() =>
+                                setOnlyMyPosts((checked) => !checked)
+                            }
+                        />
+                        Only show my posts
+                    </div>
                 </div>
             ) : null}
             <div className={styles.chatButtonWrapper}>

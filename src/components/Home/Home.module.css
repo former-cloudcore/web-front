@@ -35,3 +35,9 @@
     align-items: center;
     margin-bottom: 1rem;
 }
+.toggle{
+    background-color: white;
+    border: 1px solid #61b41e;
+    padding: 0 1rem;
+    border-radius: 2rem;
+}

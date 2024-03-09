@@ -113,7 +113,10 @@ const ProfilePage = () => {
             <div className={styles.profileWrapper}>
                 <div className={styles.topPart}>
                     <div className={styles.profileImageWrapper}>
-                        <img src={formatImage(user.image)} className={styles.profileImage} />
+                        <img
+                            src={formatImage(user.image)}
+                            className={styles.profileImage}
+                        />
                     </div>
                     <div className={styles.changeProfileImage}>
                         {imageState ? (
