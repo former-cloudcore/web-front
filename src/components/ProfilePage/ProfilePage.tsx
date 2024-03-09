@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import styles from './ProfilePage.module.css';
-import { getUser } from '../../utils/user-service';
+import { getUser, updateUser } from '../../utils/user-service';
 import CircularProgress from '@mui/material/CircularProgress';
-import { isGoogleUser } from '../../utils/utils';
+import { formatImage, isGoogleUser } from '../../utils/utils';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
+import Alert from '@mui/material/Alert';
 
 const ProfilePage = () => {
     const [loading, setLoading] = useState(true);
@@ -11,7 +13,9 @@ const ProfilePage = () => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirmPassword, setConfirmPassword] = useState<string>('');
-
+    const [confirmPasswordError, setConfirmPasswordError] =
+        useState<boolean>(false); // Add state for error
+    const [errorState, setErrorState] = useState<string>('');
     const [user, setUser] = useState({
         _id: '',
         email: '',
@@ -52,6 +56,38 @@ const ProfilePage = () => {
         inputElement.click();
     };
 
+    const handleConfirmPasswordChange = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setConfirmPassword(e.target.value);
+        setConfirmPasswordError(e.target.value !== password);
+    };
+
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(e.target.value);
+        setConfirmPasswordError(e.target.value !== confirmPassword);
+    };
+
+    const handleSave = async () => {
+        if (confirmPasswordError) {
+            setErrorState('Passwords do not match');
+            return;
+        }
+        if (!imageState && !username && !password) {
+            setErrorState('No changes made');
+            return;
+        }
+
+        try {
+            await updateUser(username, imageState, password);
+            window.location.href = '/';
+        } catch (e) {
+            setErrorState(
+                'An error occurred while updating user. Please try again later.'
+            );
+        }
+    };
+
     if (loading) {
         return (
             <div className={styles.profilePage}>
@@ -77,7 +113,7 @@ const ProfilePage = () => {
             <div className={styles.profileWrapper}>
                 <div className={styles.topPart}>
                     <div className={styles.profileImageWrapper}>
-                        <img src={user.image} className={styles.profileImage} />
+                        <img src={formatImage(user.image)} className={styles.profileImage} />
                     </div>
                     <div className={styles.changeProfileImage}>
                         {imageState ? (
@@ -120,6 +156,11 @@ const ProfilePage = () => {
                     </div>
                 </div>
                 <div className={styles.profileInfo}>
+                    {errorState && (
+                        <Alert className={styles.alert} severity="error">
+                            {errorState}
+                        </Alert>
+                    )}
                     <div className={styles.userName}>
                         <div className={styles.currentUsername}>
                             Current Username: {user.name}
@@ -145,7 +186,7 @@ const ProfilePage = () => {
                                 type="password"
                                 placeholder="new password"
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={handlePasswordChange}
                                 className={styles.input}
                             />
                         </div>
@@ -155,19 +196,25 @@ const ProfilePage = () => {
                                 type="password"
                                 placeholder="confirm new password"
                                 value={confirmPassword}
-                                onChange={(e) =>
-                                    setConfirmPassword(e.target.value)
-                                }
-                                className={styles.input}
+                                onChange={handleConfirmPasswordChange}
+                                className={classNames([
+                                    styles.input,
+                                    {
+                                        [styles.errorInput]:
+                                            confirmPasswordError,
+                                    },
+                                ])}
                             />
                         </div>
                     </div>
                 </div>
                 <div className={styles.footer}>
-                    <Link to="/" className={styles.homeButton}>
-                        Home
+                    <Link to="/" className={styles.link}>
+                        <div className={styles.generalButton}>Home</div>
                     </Link>
-                    <button className={styles.saveButton}>Save</button>
+                    <div className={styles.generalButton} onClick={handleSave}>
+                        Save
+                    </div>
                 </div>
             </div>
         </div>

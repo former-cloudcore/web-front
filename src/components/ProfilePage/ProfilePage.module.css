@@ -64,10 +64,7 @@
     display: flex;
     width: 30rem;
     flex-direction: column;
-
     align-items: center;
-    gap: 1rem;
-    margin-top: 1rem;
 }
 
 .profileImageWrapper {
@@ -161,17 +158,16 @@
     font-size: 2rem;
 }
 
-.profileInfo{
+.profileInfo {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
     width: 100%;
-    padding: 1rem;
 }
 
 .input {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     width: 25rem;
     height: 4rem;
     font-size: 2rem;
@@ -179,4 +175,41 @@
     border: 2px solid #61b41e;
     outline: none;
     padding-left: 0.5rem;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding: 1rem;
+}
+
+.generalButton {
+    width: 10rem;
+
+    height: 4rem;
+    font-size: 2rem;
+    border-radius: 1rem;
+    border: 2px solid #61b41e;
+    outline: none;
+    background-color: #61b41e;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.generalButton:hover {
+    background-color: #428110;
+    border-color: #428110;
+}
+
+.link {
+    text-decoration: none;
+}
+
+.errorInput {
+    border: 2px solid #dc3545;
 }

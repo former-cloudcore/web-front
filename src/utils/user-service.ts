@@ -91,7 +91,6 @@ export const googleSignin = async (tokenId: string): Promise<void> => {
 };
 
 export const logoutUser = async (): Promise<void> => {
-    
     const unintercepted = axios.create();
     await unintercepted.get(`${SERVER_URL}/auth/logout`, {
         headers: {
@@ -101,4 +100,28 @@ export const logoutUser = async (): Promise<void> => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('userId');
+};
+
+export const updateUser = async (
+    name?: string,
+    image?: File,
+    password?: string
+): Promise<void> => {
+    const imageUrl = image ? await uploadImage(image) : undefined;
+    const body: {
+        name?: string;
+        image?: string;
+        password?: string;
+    } = {};
+    if (name) {
+        body['name'] = name;
+    }
+    if (imageUrl) {
+        body['image'] = imageUrl;
+    }
+    if (password) {
+        body['password'] = password;
+    }
+
+    await apiClient.put('/user', body);
 };
