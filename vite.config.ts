@@ -14,12 +14,6 @@ export default defineConfig(({ mode }) => {
         return {
             server: {
                 https: true,
-                proxy: {
-                    '/api': {
-                        target: 'https://localhost:4000',
-                        secure: false,
-                    },
-                },
             },
             plugins: [react(), mkcert()],
         };
