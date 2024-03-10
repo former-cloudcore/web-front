@@ -11,6 +11,7 @@ export default defineConfig(({ mode }) => {
     }
 
     if (mode === 'production') {
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
         return {
             server: {
                 https: true,
