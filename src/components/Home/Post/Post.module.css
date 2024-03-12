@@ -9,6 +9,8 @@
     border: 1px solid #61b41e;
     border-radius: 5%;
     width: 50rem;
+    scrollbar-gutter: stable;
+    
 }
 
 .imageWrapper {
@@ -83,7 +85,7 @@
     position: absolute;
     display: flex;
     flex-direction: column;
-    
+
     align-items: center;
     justify-content: center;
     margin-top: 50vh;
@@ -121,7 +123,7 @@
     text-decoration-line: underline;
 }
 
-.buttons{
+.buttons {
     padding-top: 1rem;
     display: flex;
     flex-direction: column;
@@ -133,11 +135,8 @@
 
     border: none;
     border-radius: 0.5rem;
-    padding: 0.5rem;
     cursor: pointer;
     font-size: 1.5rem;
-    margin-right: 3rem;
-    margin-left: auto;
 
     svg {
         width: 3rem;
@@ -149,14 +148,13 @@
     }
 }
 
-.editButton{
+.editButton {
     color: #61b41e;
     border: none;
     border-radius: 0.5rem;
-    padding: 0.5rem;
     cursor: pointer;
     font-size: 1.5rem;
-    margin-right: 3rem;
+
     svg {
         width: 3rem;
         height: 3rem;
@@ -164,10 +162,9 @@
     &:hover {
         color: #428110;
     }
-
 }
 
-.deleteButtonModal{
+.deleteButtonModal {
     color: #dc3545;
     border: none;
     cursor: pointer;
@@ -180,7 +177,6 @@
     &:hover {
         color: #bd2130;
     }
-
 }
 
 .middleCenterPart {
@@ -189,11 +185,11 @@
     scrollbar-width: thin;
 }
 
-.cursorPointer{
+.cursorPointer {
     cursor: pointer;
 }
 
-.postPage{
+.postPage {
     border-bottom-left-radius: 0%;
     border-bottom-right-radius: 0%;
 }
