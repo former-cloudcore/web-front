@@ -42,7 +42,7 @@ const Chat = () => {
     }, []);
 
     useEffect(() => {
-        const newSocket = socketIOClient('');
+        const newSocket = socketIOClient(SERVER_URL);
         setSocket(newSocket);
         newSocket.on('message', (convo) => {
             try {
