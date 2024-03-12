@@ -14,7 +14,7 @@ const ProfileDropDown = () => {
     useEffect(() => {
         (async () => {
             const user = await getUser();
-            setImage(formatImage(user.image));
+            setImage(user.image);
         })();
     }, []);
 
