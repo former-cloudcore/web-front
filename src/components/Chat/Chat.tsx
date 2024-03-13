@@ -42,7 +42,7 @@ const Chat = () => {
     }, []);
 
     useEffect(() => {
-        const newSocket = socketIOClient(SOCKET_URL);
+        const newSocket = socketIOClient(SOCKET_URL, {rejectUnauthorized: false});
         setSocket(newSocket);
         newSocket.on('message', (convo) => {
             try {
