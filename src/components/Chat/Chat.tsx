@@ -8,7 +8,7 @@ import {
 } from '../../utils/chat-service.ts';
 import { getUsers } from '../../utils/user-service.ts';
 import styles from './Chat.module.css';
-import { SERVER_URL } from '../../utils/consts.ts';
+import { SOCKET_URL } from '../../utils/consts.ts';
 import usePostCheckingUserHook from '../CreatePost/usePostsCheckingUserHook.tsx';
 import { ChatResponse } from '../../utils/chat-service.ts';
 import { UserResponse } from '../../utils/user-service.ts';
@@ -42,7 +42,7 @@ const Chat = () => {
     }, []);
 
     useEffect(() => {
-        const newSocket = socketIOClient(SERVER_URL.replace('api', ''));
+        const newSocket = socketIOClient(SOCKET_URL);
         setSocket(newSocket);
         newSocket.on('message', (convo) => {
             try {
