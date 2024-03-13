@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import { signUpUser } from '../../../utils/user-service';
 import { isAxiosError } from 'axios';
+import { EMAIL_REGEX } from '../../../utils/consts';
 
 const SignUp = () => {
     const [emailState, setEmailState] = React.useState('');
@@ -14,6 +15,7 @@ const SignUp = () => {
     const [usernameState, setUsernameState] = React.useState('');
     const [imageState, setImageState] = React.useState<File>();
     const [isPasswordValid, setIsPasswordValid] = React.useState(true);
+    const [isEmailValid, setIsEmailValid] = React.useState(true);
     const [errorState, setErrorState] = React.useState('');
 
     const handleSubmit = async () => {
@@ -21,8 +23,12 @@ const SignUp = () => {
             setErrorState('All fields are required');
             return;
         }
-        if (passwordState !== confirmPasswordState) {
-            setIsPasswordValid(false);
+        if (!isEmailValid) {
+            setErrorState('Invalid email');
+            return;
+        }
+        if (!isPasswordValid) {
+            setErrorState('Passwords do not match');
             return;
         }
 
@@ -59,6 +65,10 @@ const SignUp = () => {
         }
     };
 
+    const handleEmailChanged = (email: string) => {
+        setIsEmailValid(EMAIL_REGEX.test(email));
+    };
+
     const handleImageChange = async (
         e: React.ChangeEvent<HTMLInputElement>
     ) => {
@@ -91,8 +101,13 @@ const SignUp = () => {
                             placeholder="Email"
                             type="text"
                             value={emailState}
-                            className={classNames(styles.input, styles.email)}
-                            onChange={(e) => setEmailState(e.target.value)}
+                            className={classNames(styles.input, styles.email, {
+                                [styles.invalid]: !isEmailValid,
+                            })}
+                            onChange={(e) => {
+                                setEmailState(e.target.value);
+                                handleEmailChanged(e.target.value);
+                            }}
                         />
                     </div>
                     <div className={styles.bigInput}>
@@ -133,7 +148,7 @@ const SignUp = () => {
                         />
                     </div>
                     <div className={styles.imageInputWrapper}>
-                        <div className={styles.imageInputText}>
+                        <div className={classNames(styles.imageInputText)}>
                             Pick an image:
                         </div>
                         <input
